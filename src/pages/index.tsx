@@ -1,3 +1,5 @@
+import React, { useEffect, useState, Fragment } from "react";
+import { ethers } from 'ethers';
 import {
   Link as ChakraLink,
   Text,
@@ -15,10 +17,34 @@ import { DarkModeSwitch } from '../components/DarkModeSwitch'
 import { CTA } from '../components/CTA'
 import { Footer } from '../components/Footer'
 
+import { Flex, Heading, Icon } from "@chakra-ui/react";
+import { SiChakraui } from "react-icons/si";
+import { ChatIcon } from "@chakra-ui/icons";
+
 const Index = () => (
   <Container height="100vh">
     <Hero />
     <Main>
+      <Flex
+        color="blue.600"
+        fontSize="50px"
+        justify="center"
+        align="center"
+        mt="100px"
+      >
+        <Heading>React/iconsのアイコンだよ！</Heading>
+        <Icon as={SiChakraui} />
+      </Flex>
+      <Flex
+        color="green.600"
+        fontSize="50px"
+        justify="center"
+        align="center"
+        mt="100px"
+      >
+        <Heading>Chakra-ui/iconsのアイコンだよ！</Heading>
+        <ChatIcon />
+      </Flex>
       <Text color="text">
         Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
         <Code>TypeScript</Code>.
