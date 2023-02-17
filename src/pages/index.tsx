@@ -7,6 +7,8 @@ import {
   List,
   ListIcon,
   ListItem,
+  Button,
+  Box
 } from '@chakra-ui/react'
 
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
@@ -17,6 +19,8 @@ import { Main } from '../components/Main'
 import { CTA } from '../components/CTA'
 import { Footer } from '../components/Footer'
 import {WithSubnavigation} from '../components/WithSubNavigationAndCTA'
+import { ImgNFT } from '../components/ImageOfNFT'
+import { Describe } from '../components/Description'
 
 import { Flex, Heading, Icon } from "@chakra-ui/react";
 import { SiChakraui } from "react-icons/si";
@@ -24,63 +28,77 @@ import { ChatIcon } from "@chakra-ui/icons";
 
 const Index = () => (
 
-  <>
-  <WithSubnavigation/>
-  <Container height="100vh">
-    <Hero />
-    <Main>
-      <Flex
-        color="blue.600"
-        fontSize="50px"
-        justify="center"
-        align="center"
-        mt="100px"
-      >
-        <Heading>React/iconsのアイコンだよ！</Heading>
-        <Icon as={SiChakraui} />
-      </Flex>
-      <Flex
-        color="green.600"
-        fontSize="50px"
-        justify="center"
-        align="center"
-        mt="100px"
-      >
-        <Heading>Chakra-ui/iconsのアイコンだよ！</Heading>
-        <ChatIcon />
-      </Flex>
-      <Text color="text">
-        Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
-        <Code>TypeScript</Code>.
-      </Text>
-
-      <List spacing={3} my={0} color="text">
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink
-            isExternal
-            href="https://chakra-ui.com"
-            flexGrow={1}
-            mr={2}
-          >
-            Chakra UI <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
-            Next.js <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-      </List>
-    </Main>
-
-    <Footer>
+  <div className="App">
+    <header>
+      <div className="container">
+        <WithSubnavigation/>
+      </div>
+    </header>
+    <div className="top-wrapper">
+      <div className="container ">
+        <div className="imgcenter">
+          <img src='https://prtimes.jp/i/77068/5/resize/d77068-5-2f9c9f0b1fea8e5f25e4-5.jpg'></img>
+        </div>
+        {/*<Box display='flex' justifyContent='center' alignItems='center' bg='gray.100' pt = {10} height={'300px'}>
+          <ImgNFT />
+        </Box>*/}
+        <Box display='flex' justifyContent='center' alignItems='center' >
+          <Hero />
+        </Box>
+        <Box display='flex' justifyContent='center' alignItems='center' >
+          <Describe />
+        </Box>
+        <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
+          <Button
+            as={'a'}
+            display={{ base: 'none', md: 'inline-flex' }}
+            width={'150px'}
+            shadow={"md"}
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'blue.400'}
+            href={'#'}
+            _hover={{
+              bg: 'blue.300',
+            }}>
+            faucetサイト
+          </Button>
+        </Box>
+        <Box display='flex' justifyContent='center' alignItems='center' pb={'7'}>
+          <Button
+            as={'a'}
+            display={{ base: 'none', md: 'inline-flex' }}
+            width={'150px'}
+            shadow={"md"}
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'teal.400'}
+            href={'#'}
+            _hover={{
+              bg: 'teal.300',
+            }}>
+            ウォレット接続
+          </Button>
+        </Box>
+      </div>
+    </div>
+    <footer>
+      <div className="footer-left">
+        <img alt="Twitter Logo" src='https://prtimes.jp/i/77068/5/resize/d77068-5-2f9c9f0b1fea8e5f25e4-5.jpg' width={'200px'} />
+      </div>
+      <div className="footer-rigft">
+        <h3>フッターフッターフッターフッターフッターフッターフッターフッターフッターフッターフッター</h3>
+        <p>フッターフッターフッターフッターフッターフッターフッターフッターフッターフッターフッターフッターフッターフッターフッター</p>
+      </div>
+    </footer>
+    {/*<Footer>
       <Text>Next ❤️ Chakra</Text>
     </Footer>
-    <CTA />
-  </Container>
-  </>
+    <CTA />*/}
+  
+  </div>
 )
 
 export default Index

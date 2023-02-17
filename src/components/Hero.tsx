@@ -1,17 +1,16 @@
-import { Flex, Heading } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 
 export const Hero = ({ title }: { title: string }) => (
   <Flex
-    justifyContent="center"
-    alignItems="center"
-    height="100vh"
+    height="15vh"
+    paddingBottom="20px"
     bgGradient="linear(to-l, heroGradientStart, heroGradientEnd)"
     bgClip="text"
   >
-    <Heading fontSize="6vw">{title}</Heading>
+    <Text fontSize="6vw" as='b'>{title}</Text>
   </Flex>
 )
 
 Hero.defaultProps = {
-  title: 'DAO-A-THON 4月開催予定！',
+  title: 'NFT無料',
 }

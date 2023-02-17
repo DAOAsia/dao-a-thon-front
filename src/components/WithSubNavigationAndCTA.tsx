@@ -66,7 +66,7 @@ import {
                 textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
                 fontFamily={'heading'}
                 color={useColorModeValue('white', 'white')}
-                fontSize={'4xl'}>
+                fontSize={'3xl'}>
                 NFT MINT SITE
               </Text>
             </Box>
