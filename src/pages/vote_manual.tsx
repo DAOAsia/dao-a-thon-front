@@ -8,7 +8,7 @@ import {
 import { Footer } from '../components/Footer'
 import {WithSubnavigation} from '../components/WithSubNavigationAndCTA'
 import { ImgNFT } from '../components/ImageOfNFT'
-import { Describe } from '../components/Description'
+import { VoteManual } from '../components/VoteManual'
 import { TopMessage } from '../components/TopMessage'
 import { BFaucet } from '../components/ButtonFaucet'
 import { BWallet } from '../components/ButtonWallet'
@@ -27,11 +27,7 @@ const Index = () => (
     </header>
     <div className="top-wrapper">
       <div className="container ">
-        <ImgNFT />
-        <TopMessage />
-        <Describe />
-        <BFaucet />
-        <BWallet />
+        <VoteManual />
       </div>
     </div>
     <Footer />
