@@ -1,6 +1,6 @@
 import { Box, Button } from '@chakra-ui/react'
 
-export const Hero = ({ title }: { title: string }) => (
+export const BFaucet = ({ title }: { title: string }) => (
   <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
     <Button
       as={'a'}
@@ -15,11 +15,11 @@ export const Hero = ({ title }: { title: string }) => (
       _hover={{
         bg: '#F9BC30',
       }}>
-      faucetサイト
+      {title}
     </Button>
   </Box>
 )
 
-Hero.defaultProps = {
-  title: 'NFT無料',
+BFaucet.defaultProps = {
+  title: 'faucetサイト',
 }

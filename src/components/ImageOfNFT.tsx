@@ -1,9 +1,8 @@
-import { Box, Image, } from '@chakra-ui/react'
 
 export const ImgNFT = ({ imagesrc }: { imagesrc: string }) => (
-    <Box boxSize={'lg'} my = {10} >
-        <Image src={imagesrc} alt='DAO-A-THON NFT'/>    
-    </Box>
+    <div className="imgcenter">
+        <img id="image" src={imagesrc}></img>
+    </div>
 )
 
 ImgNFT.defaultProps = {

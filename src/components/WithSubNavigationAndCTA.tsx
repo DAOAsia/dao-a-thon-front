@@ -54,18 +54,11 @@ import {
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
             
             <Box>
-              {/*<Text
-                textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-                fontFamily={'heading'}
-                color={useColorModeValue('black', 'white')}
-                fontSize={'sm'}
-                mr={3}>
-                THE DAO-A-THON
-            </Text>*/}
               <Text
                 textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
                 fontFamily={'heading'}
-                color={useColorModeValue('white', 'white')}
+                color={useColorModeValue('black', 'white')}
+                fontWeight={700}
                 fontSize={'3xl'}>
                 NFT MINT SITE
               </Text>
@@ -90,10 +83,10 @@ import {
               fontSize={'sm'}
               fontWeight={600}
               color={'white'}
-              bg={'teal.400'}
+              bg={'#F17C1D'}
               href={'#'}
               _hover={{
-                bg: 'teal.300',
+                bg: '#F9BC30',
               }}>
               ウォレット接続
             </Button>
@@ -115,32 +108,16 @@ import {
     return (
       <Stack direction={'row'} spacing={4}>
         {NAV_ITEMS.map((navItem) => (
-          <Box key={navItem.label}  >
-            <Button
-              as={'a'}
-              display={{ base: 'none', md: 'inline-flex' }}
-              shadow={"md"}
-              fontSize={'md'}
-              fontWeight={600}
-              color={'white'}
-              bg={'blue.400'}
-              width={"125px"}
-              href={'#'}
-              _hover={{
-                bg: 'blue.300',
-              }}>
-              {navItem.label}
-            </Button>
-          </Box>
-          /*<Box key={navItem.label}>
+          
+          <Box key={navItem.label}>
             <Popover trigger={'hover'} placement={'bottom-start'}>
               <PopoverTrigger>
                 <Link
                   p={2}
                   href={navItem.href ?? '#'}
-                  fontSize={'sm'}
-                  fontWeight={500}
-                  color={linkColor}
+                  fontSize={'xl'}
+                  fontWeight={700}
+                  color={'white'}
                   _hover={{
                     textDecoration: 'none',
                     color: linkHoverColor,
@@ -165,7 +142,7 @@ import {
                 </PopoverContent>
               )}
             </Popover>
-          </Box>*/
+          </Box>
         ))}
       </Stack>
     );
@@ -318,3 +295,21 @@ import {
       ],
     },
   ];*/
+
+  {/*<Box key={navItem.label}  >
+            <Button
+              as={'a'}
+              display={{ base: 'none', md: 'inline-flex' }}
+              shadow={"md"}
+              fontSize={'md'}
+              fontWeight={600}
+              color={'white'}
+              bg={'#F17C1D'}
+              width={"125px"}
+              href={'#'}
+              _hover={{
+                bg: '#F9BC30',
+              }}>
+              {navItem.label}
+            </Button>
+            </Box>*/}
