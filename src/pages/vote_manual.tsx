@@ -27,9 +27,9 @@ const Index = () => (
     </header>
     <div className="top-wrapper">
       <div className="container ">
-      {/*<Link
+      <Link
           p={2}
-          href={'/home'}
+          href={'/'}
           fontSize={'xl'}
           fontWeight={700}
           color={'black'}
@@ -39,9 +39,6 @@ const Index = () => (
           }}>
           vote manual
         </Link>
-        <Link href="/index.tsx">
-          vote manual
-        </Link>*/}
         <ImgNFT />
         <TopMessage />
         <Describe />

@@ -54,14 +54,18 @@ import {
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
             
             <Box>
-              <Text
-                textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-                fontFamily={'heading'}
-                color={useColorModeValue('black', 'white')}
+              <Link
+                p={2}
+                href={'/'}
+                fontSize={'3xl'}
                 fontWeight={700}
-                fontSize={'3xl'}>
-                NFT MINT SITE
-              </Text>
+                color={'black'}
+                _hover={{
+                  textDecoration: 'none',
+                  color: 'gray',
+                }}>
+                  NFT MINT SITE
+              </Link>
             </Box>
   
             <Center>
