@@ -1,5 +1,4 @@
 import React, { useEffect, useState, Fragment } from "react";
-import { ethers } from 'ethers';
 
 import { Footer } from '../components/Footer'
 import {WithSubnavigation} from '../components/WithSubNavigationAndCTA'
@@ -13,27 +12,29 @@ import { Container } from '../components/Container'
 import { Main } from '../components/Main'
 import { CTA } from '../components/CTA'
 
-const Index = () => (
+const Index = () => {
 
-  <div className="App">
-    <header>
-      <div className="container-head">
-        <WithSubnavigation/>
+  return(
+    <div className="App">
+      <header>
+        <div className="container-head">
+          <WithSubnavigation/>
+        </div>
+      </header>
+      <div className="top-wrapper">
+        <div className="container ">
+          <ImgNFT />
+          <TopMessage />
+          <Describe />
+          <BFaucet />
+          <BWallet />
+        </div>
       </div>
-    </header>
-    <div className="top-wrapper">
-      <div className="container ">
-        <ImgNFT />
-        <TopMessage />
-        <Describe />
-        <BFaucet />
-        <BWallet />
-      </div>
+      <Footer />
+      {/*<CTA />*/}
+    
     </div>
-    <Footer />
-    {/*<CTA />*/}
-  
-  </div>
-)
+  )
+}
 
 export default Index
