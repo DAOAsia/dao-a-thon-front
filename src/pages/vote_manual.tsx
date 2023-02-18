@@ -27,18 +27,6 @@ const Index = () => (
     </header>
     <div className="top-wrapper">
       <div className="container ">
-      <Link
-          p={2}
-          href={'/'}
-          fontSize={'xl'}
-          fontWeight={700}
-          color={'black'}
-          _hover={{
-            textDecoration: 'none',
-            color: 'gray',
-          }}>
-          vote manual
-        </Link>
         <ImgNFT />
         <TopMessage />
         <Describe />
