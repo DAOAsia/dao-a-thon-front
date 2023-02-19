@@ -240,6 +240,10 @@ const Index = () => {
             <Flex
               bg={useColorModeValue('#f6a429', 'gray.800')}
               color={useColorModeValue('gray.600', 'white')}
+              position={"fixed"}
+              top={"0"}
+              left={"0"}
+              width={"100%"}
               minH={'60px'}
               py={{ base: 2 }}
               px={{ base: 4 }}
