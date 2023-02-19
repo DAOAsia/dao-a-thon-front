@@ -52,6 +52,8 @@ const Index = () => {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [metamaskError, setMetamaskError] = useState(null);
   const [mineStatus, setMineStatus] = useState(null);
+  const [totalMintCount, setTotalMintCount] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
   {/************************************ここから処理系のメソッド************************************/}  
 
@@ -103,8 +105,6 @@ const Index = () => {
 
         setMineStatus('mining');
 
-        //const { ethereum } = window;
-
         if (ethereum) {
           const provider = new ethers.providers.Web3Provider(ethereum);
           const signer = provider.getSigner();
@@ -131,6 +131,46 @@ const Index = () => {
       }
     }
   }
+
+  {/************************************ここからuseEffect系のメソッド************************************/}
+
+  useEffect(() => {
+    let daoathonnft;
+
+    const Transfer = (from, to, tokenId) => {
+      console.log("useEffect NewTotalMintCount", tokenId);
+      const tokenIdCleaned = tokenId;
+      setTotalMintCount(tokenIdCleaned);
+      alert(tokenIdCleaned);
+    };
+
+    const onResultMessage = (mes) => {
+      console.log("useEffect ResultMessage", mes);
+      //const mesCleaned = mes;
+      //setResultMessage(mesCleaned);
+      setShowToast(true);
+      setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
+    };
+
+    /* NewWaveイベントがコントラクトから発信されたときに、情報をを受け取ります */
+    const { ethereum } = window as any;
+    if (ethereum) {
+
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const daoathonnftContract = new ethers.Contract(contractAddress, abi, signer);
+
+      daoathonnftContract.on("Transfer", Transfer);
+    }
+    /*メモリリークを防ぐために、NewWaveのイベントを解除します*/
+    return () => {
+      if (daoathonnft) {
+        daoathonnft.off("Transfer", Transfer);
+      }
+    };
+  }, []);
 
   {/************************************ここからレンダリング系のメソッド************************************/}
   const renderButtun = ( bname, isOnClick, ahref ) => {
