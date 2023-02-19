@@ -108,6 +108,22 @@ const Index = () => {
             </Button>;
     }
   };
+  const renderMintButtun = () => {
+    return  <Button
+              display={{ base: 'none', md: 'inline-flex' }}
+              width={'150px'}
+              onClick={handleClick}
+              shadow={"md"}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'white'}
+              bg={'#F17C1D'}
+              _hover={{
+                bg: '#F9BC30',
+              }}>
+              ミント
+            </Button>;
+  };
   function FormPage() {
     // 子コンポーネント側に引き渡す関数の定義
     function sendData(enteredData) {
@@ -178,13 +194,20 @@ const Index = () => {
                 </Center>
               </Flex>
               {/*FormPage()*/}      
-              <Stack
+              {!currentAccount && <Stack
                 flex={{ base: 1, md: 0 }}
                 justify={'flex-end'}
                 direction={'row'}
                 spacing={6}>
                 {renderButtun("ウォレット接続",true,"")}
-              </Stack>
+              </Stack>}
+              {currentAccount && <Stack
+                flex={{ base: 1, md: 0 }}
+                justify={'flex-end'}
+                direction={'row'}
+                spacing={6}>
+                <p>アドレス{currentAccount}</p>
+              </Stack>}
             </Flex>
       
             <Collapse in={isOpen} animateOpacity>
@@ -203,7 +226,12 @@ const Index = () => {
             {renderButtun("faucetサイト",false,"#")}
           </Box>
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            {renderButtun("ウォレット接続",true,"")}
+            {!currentAccount && renderButtun("ウォレット接続",true,"")}
+            {currentAccount && 
+              <div>
+                {renderMintButtun()}
+                <p>アドレス{currentAccount}で接続済み</p>
+              </div>}
           </Box>
         </div>
       </div>
