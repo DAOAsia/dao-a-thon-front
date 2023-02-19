@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
-
+import { ethers } from 'ethers';
+import contract from '../contracts/Daoathon.json';
 import {
   Box,
   Flex,
@@ -39,12 +40,18 @@ import { Main } from '../components/Main'
 import { CTA } from '../components/CTA'
 import TestForm from "../components/TestForm";
 
+// Constants
+const OPENSEA_LINK = 'https://testnets.opensea.io/0x4833c2fb6f00787c7f5f60a7f1a8ad9e191648c8';
+const abi = contract.abi;
+const contractAddress = "0xf2D242721111497806a0ea644E738F182BCE407B";
+
 const Index = () => {
 
   const { isOpen, onToggle } = useDisclosure();
 
   const [currentAccount, setCurrentAccount] = useState(null);
   const [metamaskError, setMetamaskError] = useState(null);
+  const [mineStatus, setMineStatus] = useState(null);
 
   {/************************************ここから処理系のメソッド************************************/}  
 
@@ -81,6 +88,49 @@ const Index = () => {
       <p color="white">{topvisible}...{bottomvisible}</p>
     )
   };
+
+  const mintNFT = async () => {
+    const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
+    const network = await ethereum.request({ method: 'eth_chainId' });
+
+    if (network.toString() === '0x13881') {
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      console.log("Found an account! Address: ", accounts[0]);
+      setMetamaskError(null);
+      setCurrentAccount(accounts[0]);
+
+      try {
+
+        setMineStatus('mining');
+
+        //const { ethereum } = window;
+
+        if (ethereum) {
+          const provider = new ethers.providers.Web3Provider(ethereum);
+          const signer = provider.getSigner();
+          const nftContract = new ethers.Contract(contractAddress, abi, signer);
+
+          console.log("Mint start!");
+
+          let nftTxn = await nftContract.mintNft({ gasLimit: 1600000 });
+
+          console.log("Mining... please wait");
+          await nftTxn.wait();
+
+          console.log(`Mined, see transaction: ${nftTxn.hash}`);
+          setMineStatus('success');
+
+        } else {
+          setMineStatus('error');
+          console.log("Ethereum object does not exist");
+        }
+
+      } catch (err) {
+        setMineStatus('error');
+        console.log(err);
+      }
+    }
+  }
 
   {/************************************ここからレンダリング系のメソッド************************************/}
   const renderButtun = ( bname, isOnClick, ahref ) => {
@@ -121,7 +171,7 @@ const Index = () => {
     return  <Button
               display={{ base: 'none', md: 'inline-flex' }}
               width={'150px'}
-              onClick={handleClick}
+              onClick={mintNFT}
               shadow={"md"}
               fontSize={'sm'}
               fontWeight={600}
@@ -240,7 +290,6 @@ const Index = () => {
             {currentAccount && 
               <div>
                 {renderMintButtun()}
-                <p>アドレス{currentAccount}で接続済み</p>
               </div>}
           </Box>
         </div>
