@@ -128,6 +128,7 @@ const Index = () => {
       } catch (err) {
         setMineStatus('error');
         console.log(err);
+        alert("ミント失敗！");
       }
     }
   }
