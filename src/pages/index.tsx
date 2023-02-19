@@ -73,6 +73,15 @@ const Index = () => {
       }
   }
 
+  const mask = function (number) {
+    const cha = String(number);
+    const topvisible = number.slice(0,4);
+    const bottomvisible = number.slice(-4);
+    return(
+      <p color="white">{topvisible}...{bottomvisible}</p>
+    )
+  };
+
   {/************************************ここからレンダリング系のメソッド************************************/}
   const renderButtun = ( bname, isOnClick, ahref ) => {
     if( isOnClick ){
@@ -121,7 +130,7 @@ const Index = () => {
               _hover={{
                 bg: '#F9BC30',
               }}>
-              ミント
+              {mask(currentAccount)}でミント
             </Button>;
   };
   function FormPage() {
@@ -178,7 +187,7 @@ const Index = () => {
                     href={'/'}
                     fontSize={'3xl'}
                     fontWeight={700}
-                    color={'black'}
+                    color={'white'}
                     _hover={{
                       textDecoration: 'none',
                       color: 'gray',
@@ -205,7 +214,8 @@ const Index = () => {
                 flex={{ base: 1, md: 0 }}
                 justify={'flex-end'}
                 direction={'row'}
-                spacing={6}>
+                spacing={6}
+                color={"white"}>
                 <p>アドレス{currentAccount}</p>
               </Stack>}
             </Flex>
