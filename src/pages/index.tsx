@@ -44,6 +44,7 @@ import TestForm from "../components/TestForm";
 const OPENSEA_LINK = 'https://testnets.opensea.io/0x4833c2fb6f00787c7f5f60a7f1a8ad9e191648c8';
 const abi = contract.abi;
 const contractAddress = "0xf2D242721111497806a0ea644E738F182BCE407B";
+const MaticTestnetMumbaiNetworkChainId = "0x13881";
 
 const Index = () => {
 
@@ -57,12 +58,51 @@ const Index = () => {
 
   {/************************************ここから処理系のメソッド************************************/}  
 
-  const handleClick = async () => {
+  const handleClick = async () => { // connect wallet
     const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
     // ウォレット接続処理
     if (!ethereum) {
         alert("Please install Metamask!");
     }
+
+    if (ethereum.networkVersion !== MaticTestnetMumbaiNetworkChainId) {
+      try {
+        // Mumbai testnet に切り替えます。
+        await ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x13881' }], // utilsフォルダ内のnetworks.js を確認しましょう。0xは16進数です。
+        });
+      } catch (error) {
+        // このエラーコードは当該チェーンがメタマスクに追加されていない場合です。
+        // その場合、ユーザーに追加するよう促します。
+        if (error.code === 4902) {
+          try {
+            await ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: '0x13881',
+                  chainName: 'Polygon Mumbai Testnet',
+                  rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
+                  nativeCurrency: {
+                      name: "Mumbai Matic",
+                      symbol: "MATIC",
+                      decimals: 18
+                  },
+                  blockExplorerUrls: ["https://mumbai.polygonscan.com/"]
+                },
+              ],
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        console.log(error);
+      }
+    }
+
+    
+
     try {
         const network = await ethereum.request({ method: 'eth_chainId' });
   
