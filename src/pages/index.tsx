@@ -141,17 +141,6 @@ const Index = () => {
       console.log("useEffect NewTotalMintCount", tokenId);
       const tokenIdCleaned = tokenId;
       setTotalMintCount(tokenIdCleaned);
-      alert(tokenIdCleaned);
-    };
-
-    const onResultMessage = (mes) => {
-      console.log("useEffect ResultMessage", mes);
-      //const mesCleaned = mes;
-      //setResultMessage(mesCleaned);
-      setShowToast(true);
-      setTimeout(() => {
-        setShowToast(false);
-      }, 5000);
     };
 
     /* NewWaveイベントがコントラクトから発信されたときに、情報をを受け取ります */
@@ -193,6 +182,8 @@ const Index = () => {
       return  <Button
               as={'a'}
               href={ ahref }
+              target={'_blank'} 
+              rel={'noreferrer'}
               display={{ base: 'none', md: 'inline-flex' }}
               width={'150px'}
               shadow={"md"}
@@ -327,10 +318,15 @@ const Index = () => {
           </Box>
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
             {!currentAccount && renderButtun("ウォレット接続",true,"")}
-            {currentAccount && 
+            {currentAccount && !totalMintCount && 
               <div>
                 {renderMintButtun()}
               </div>}
+            {currentAccount && totalMintCount && 
+            <div>
+              {renderButtun("OpenSeaでNFTを確認",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
+              <p>NFTのミントに成功しました！おめでとうございます！</p>
+            </div>}
           </Box>
         </div>
       </div>
