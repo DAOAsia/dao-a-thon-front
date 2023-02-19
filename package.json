@@ -6,12 +6,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "@3rdweb/hooks": "^1.9.2",
+    "@3rdweb/sdk": "^1.42.1",
     "@chakra-ui/icons": "^2.0.2",
     "@chakra-ui/react": "^2.2.1",
     "@chakra-ui/theme-tools": "^2.0.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.9.0",
-    "ethers": "^6.0.3",
+    "ethers": "^5.7.2",
     "framer-motion": "^6.3.0",
     "next": "^13.1.6",
     "react": "^18.2.0",
