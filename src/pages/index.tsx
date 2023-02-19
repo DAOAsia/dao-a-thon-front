@@ -26,6 +26,7 @@ import {
 } from '@chakra-ui/icons';
 
 import { Footer } from '../components/Footer'
+import WithSubnavigation from '../components/WithSubNavigationAndCTA'
 import { DesktopNav, MobileNav } from '../components/WithSubNavigationAndCTA'
 import { ImgNFT } from '../components/ImageOfNFT'
 import { Describe } from '../components/Description'
@@ -36,6 +37,7 @@ import { Hero } from '../components/Hero'
 import { Container } from '../components/Container'
 import { Main } from '../components/Main'
 import { CTA } from '../components/CTA'
+import TestForm from "../components/TestForm";
 
 const Index = () => {
 
@@ -43,6 +45,8 @@ const Index = () => {
 
   const [currentAccount, setCurrentAccount] = useState(null);
   const [metamaskError, setMetamaskError] = useState(null);
+
+  {/************************************ここから処理系のメソッド************************************/}  
 
   const handleClick = async () => {
     const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
@@ -67,13 +71,65 @@ const Index = () => {
       } catch (err) {
         console.log(err)
       }
-}
+  }
+
+  {/************************************ここからレンダリング系のメソッド************************************/}
+  const renderButtun = ( bname, isOnClick, ahref ) => {
+    if( isOnClick ){
+      return  <Button
+              display={{ base: 'none', md: 'inline-flex' }}
+              width={'150px'}
+              onClick={handleClick}
+              shadow={"md"}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'white'}
+              bg={'#F17C1D'}
+              _hover={{
+                bg: '#F9BC30',
+              }}>
+              { bname }
+            </Button>;
+    }else{
+      return  <Button
+              as={'a'}
+              href={ ahref }
+              display={{ base: 'none', md: 'inline-flex' }}
+              width={'150px'}
+              shadow={"md"}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'white'}
+              bg={'#F17C1D'}
+              _hover={{
+                bg: '#F9BC30',
+              }}>
+              { bname }
+            </Button>;
+    }
+  };
+  function FormPage() {
+    // 子コンポーネント側に引き渡す関数の定義
+    function sendData(enteredData) {
+      // 子コンポーネント側から関数が呼ばれると実行される処理
+      console.log(enteredData);
+    }
+    return <TestForm sendData={sendData} />;
+  }
+  function TestPage() {
+    // 子コンポーネント側に引き渡す関数の定義
+    function setCurrentAccount(enteredData) {
+      // 子コンポーネント側から関数が呼ばれると実行される処理
+      setCurrentAccount(enteredData);
+    }
+    return <WithSubnavigation setCurrentAccount={setCurrentAccount} />;
+  }
 
   return(
     <div className="App">
       <header>
         <div className="container-head">
-          {/******************ここからトップナビゲーションバー******************/}
+          {/************************************ここからトップナビゲーションバー************************************/}
           <Box>
             <Flex
               bg={useColorModeValue('#f6a429', 'gray.800')}
@@ -121,27 +177,13 @@ const Index = () => {
                 </Flex>
                 </Center>
               </Flex>
-      
+              {/*FormPage()*/}      
               <Stack
                 flex={{ base: 1, md: 0 }}
                 justify={'flex-end'}
                 direction={'row'}
                 spacing={6}>
-                  <Button
-                    as={'a'}
-                    display={{ base: 'none', md: 'inline-flex' }}
-                    onClick={handleClick}
-                    shadow={"md"}
-                    fontSize={'sm'}
-                    fontWeight={600}
-                    color={'white'}
-                    bg={'#F17C1D'}
-                    href={'#'}
-                    _hover={{
-                      bg: '#F9BC30',
-                    }}>
-                    ウォレット接続
-                  </Button>;
+                {renderButtun("ウォレット接続",true,"")}
               </Stack>
             </Flex>
       
@@ -149,7 +191,7 @@ const Index = () => {
               <MobileNav />
             </Collapse>
           </Box>
-          {/******************ここまでトップナビゲーションバー*******************/}
+          {/************************************ここまでトップナビゲーションバー*************************************/}
         </div>
       </header>
       <div className="top-wrapper">
@@ -157,8 +199,12 @@ const Index = () => {
           <ImgNFT />
           <TopMessage />
           <Describe />
-          <BFaucet />
-          <BWallet />
+          <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
+            {renderButtun("faucetサイト",false,"#")}
+          </Box>
+          <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
+            {renderButtun("ウォレット接続",true,"")}
+          </Box>
         </div>
       </div>
       <Footer />

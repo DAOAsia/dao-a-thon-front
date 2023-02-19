@@ -26,7 +26,8 @@ import {
 
   import { renderButtunToConnectToWallet } from '../components/HandleButton';
   
-  {/*export const WithSubnavigation= () => {
+  export default function WithSubnavigation(props) {
+  //export const WithSubnavigation= () => {
     const { isOpen, onToggle } = useDisclosure();
   
     return (
@@ -92,7 +93,7 @@ import {
         </Collapse>
       </Box>
     );
-  }*/}
+  }
   
   export const DesktopNav = () => {
     const linkColor = useColorModeValue('gray.600', 'gray.200');
