@@ -18,6 +18,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Spinner,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -55,6 +56,7 @@ const Index = () => {
   const [mineStatus, setMineStatus] = useState(null);
   const [totalMintCount, setTotalMintCount] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [iaLoading, setIsLoading] = useState(false);
 
   {/************************************ここから処理系のメソッド************************************/}  
 
@@ -141,6 +143,8 @@ const Index = () => {
       setMetamaskError(null);
       setCurrentAccount(accounts[0]);
 
+      setIsLoading(true);
+
       try {
 
         setMineStatus('mining');
@@ -165,9 +169,12 @@ const Index = () => {
           console.log("Ethereum object does not exist");
         }
 
+        setIsLoading(false);
+
       } catch (err) {
         setMineStatus('error');
         console.log(err);
+        setIsLoading(false);
         alert("ミント失敗！");
       }
     }
@@ -184,7 +191,7 @@ const Index = () => {
       setTotalMintCount(tokenIdCleaned);
     };
 
-    /* NewWaveイベントがコントラクトから発信されたときに、情報をを受け取ります */
+    /* Transferイベントがコントラクトから発信されたときに、情報をを受け取ります */
     const { ethereum } = window as any;
     if (ethereum) {
 
@@ -194,7 +201,7 @@ const Index = () => {
 
       daoathonnftContract.on("Transfer", Transfer);
     }
-    /*メモリリークを防ぐために、NewWaveのイベントを解除します*/
+    /*メモリリークを防ぐために、Transferのイベントを解除します*/
     return () => {
       if (daoathonnft) {
         daoathonnft.off("Transfer", Transfer);
@@ -363,15 +370,27 @@ const Index = () => {
           </Box>
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
             {!currentAccount && renderButtun("ウォレット接続",true,"")}
-            {currentAccount && !totalMintCount && 
+            {currentAccount && !totalMintCount && !iaLoading &&
               <div>
                 {renderMintButtun()}
               </div>}
-            {currentAccount && totalMintCount && 
+            {currentAccount && totalMintCount && !iaLoading &&
             <div>
               {renderButtun("OpenSeaでNFTを確認",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
               <p>NFTのミントに成功しました！おめでとうございます！</p>
             </div>}
+            {currentAccount && !totalMintCount && iaLoading &&
+            <div>
+              <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='#f6a429'
+                size='xl'
+              />
+              <p>しばらくお待ちください。</p>
+            </div>
+            }
           </Box>
         </div>
       </div>
