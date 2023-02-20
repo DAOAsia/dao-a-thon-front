@@ -18,6 +18,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Spinner,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -184,7 +185,7 @@ const Index = () => {
       setTotalMintCount(tokenIdCleaned);
     };
 
-    /* NewWaveイベントがコントラクトから発信されたときに、情報をを受け取ります */
+    /* Transferイベントがコントラクトから発信されたときに、情報をを受け取ります */
     const { ethereum } = window as any;
     if (ethereum) {
 
@@ -194,7 +195,7 @@ const Index = () => {
 
       daoathonnftContract.on("Transfer", Transfer);
     }
-    /*メモリリークを防ぐために、NewWaveのイベントを解除します*/
+    /*メモリリークを防ぐために、Transferのイベントを解除します*/
     return () => {
       if (daoathonnft) {
         daoathonnft.off("Transfer", Transfer);
@@ -372,6 +373,13 @@ const Index = () => {
               {renderButtun("OpenSeaでNFTを確認",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
               <p>NFTのミントに成功しました！おめでとうございます！</p>
             </div>}
+            <Spinner
+              thickness='4px'
+              speed='0.65s'
+              emptyColor='gray.200'
+              color='#f6a429'
+              size='xl'
+            />
           </Box>
         </div>
       </div>
