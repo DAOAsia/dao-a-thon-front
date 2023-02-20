@@ -115,7 +115,7 @@ import {
                   color={'white'}
                   _hover={{
                     textDecoration: 'none',
-                    color: linkHoverColor,
+                    color: "gray",
                   }}>
                   {navItem.label}
                 </Link>
