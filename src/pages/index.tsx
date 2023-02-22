@@ -41,16 +41,24 @@ import { Main } from '../components/Main'
 import { CTA } from '../components/CTA'
 import TestForm from "../components/TestForm";
 
-// Constants
+{/************************************ここからグローバルな定数************************************/}  
 const OPENSEA_LINK = 'https://testnets.opensea.io/0x4833c2fb6f00787c7f5f60a7f1a8ad9e191648c8';
 const abi = contract.abi;
 const contractAddress = "0xf2D242721111497806a0ea644E738F182BCE407B";
 const MaticTestnetMumbaiNetworkChainId = "0x13881";
 
+{/***********************************************************************************************/}
+{/***********************************************************************************************/}
+{/************************************　　　　　　　　　　　　*************************************/}
+{/************************************　　　メイン関数　　　　*************************************/}
+{/************************************　　　　　　　　　　　　*************************************/}
+{/***********************************************************************************************/}
+{/***********************************************************************************************/}
+
 const Index = () => {
 
+  {/************************************ここからローカルな定数************************************/}
   const { isOpen, onToggle } = useDisclosure();
-
   const [currentAccount, setCurrentAccount] = useState(null);
   const [metamaskError, setMetamaskError] = useState(null);
   const [mineStatus, setMineStatus] = useState(null);
@@ -60,7 +68,7 @@ const Index = () => {
 
   {/************************************ここから処理系のメソッド************************************/}  
 
-  const handleClick = async () => { // connect wallet
+  const connectWallet = async () => { 
     const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
     // ウォレット接続処理
     if (!ethereum) {
@@ -175,7 +183,7 @@ const Index = () => {
         setMineStatus('error');
         console.log(err);
         setIsLoading(false);
-        alert("ミント失敗！");
+        alert("Failed to mint...");
       }
     }
   }
@@ -213,9 +221,9 @@ const Index = () => {
   const renderButtun = ( bname, isOnClick, ahref ) => {
     if( isOnClick ){
       return  <Button
-              display={{ base: 'none', md: 'inline-flex' }}
+              display={'inline-flex'}
               width={'150px'}
-              onClick={handleClick}
+              onClick={connectWallet}
               shadow={"md"}
               fontSize={'sm'}
               fontWeight={600}
@@ -232,7 +240,7 @@ const Index = () => {
               href={ ahref }
               target={'_blank'} 
               rel={'noreferrer'}
-              display={{ base: 'none', md: 'inline-flex' }}
+              display={'inline-flex'}
               width={'150px'}
               shadow={"md"}
               fontSize={'sm'}
@@ -259,7 +267,7 @@ const Index = () => {
               _hover={{
                 bg: '#F9BC30',
               }}>
-              {mask(currentAccount)}でミント
+              Mint on {mask(currentAccount)}
             </Button>;
   };
   function FormPage() {
@@ -278,6 +286,8 @@ const Index = () => {
     }
     return <WithSubnavigation setCurrentAccount={setCurrentAccount} />;
   }
+
+  {/*******************************************ここからメインのレイアウト******************************************/}
 
   return(
     <div className="App">
@@ -299,6 +309,7 @@ const Index = () => {
               borderStyle={'solid'}
               borderColor={useColorModeValue('gray.200', 'gray.900')}
               align={'center'}>
+              
               <Flex
                 flex={{ base: 1, md: 'auto' }}
                 ml={{ base: -2 }}
@@ -311,46 +322,40 @@ const Index = () => {
                   variant={'ghost'}
                   aria-label={'Toggle Navigation'}
                 />
-                </Flex>
+              </Flex>
+
               <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
                 
                 <Box>
                   <Link
+                    className={"top-title"}
                     p={2}
                     href={'/'}
-                    fontSize={'3xl'}
-                    fontWeight={700}
                     color={'white'}
                     _hover={{
                       textDecoration: 'none',
                       color: 'gray',
                     }}>
-                      NFT MINT SITE
+                      DAO-A-THON NFT
                   </Link>
                 </Box>
       
-                <Center>
-                <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-                  <DesktopNav />
-                </Flex>
-                </Center>
+                <div className={"desktop-navi"}>
+                  <Flex display={'flex'} ml={10}>
+                    <DesktopNav />
+                  </Flex>
+                </div>
+
               </Flex>
               {/*FormPage()*/}      
-              {!currentAccount && <Stack
-                flex={{ base: 1, md: 0 }}
-                justify={'flex-end'}
-                direction={'row'}
-                spacing={6}>
-                {renderButtun("ウォレット接続",true,"")}
-              </Stack>}
-              {currentAccount && <Stack
-                flex={{ base: 1, md: 0 }}
-                justify={'flex-end'}
-                direction={'row'}
-                spacing={6}
-                color={"white"}>
-                <p>アドレス{currentAccount}</p>
-              </Stack>}
+              {!currentAccount && 
+              <Box display='flex' justifyContent='flex-end' >
+                {renderButtun("Connect Wallet",true,"")}
+              </Box>}
+              {currentAccount && 
+              <Box display='flex' justifyContent='flex-end' color={"white"}>
+                <p>address:{currentAccount}</p>
+              </Box>}
             </Flex>
       
             <Collapse in={isOpen} animateOpacity>
@@ -366,18 +371,18 @@ const Index = () => {
           <TopMessage />
           <Describe />
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            {renderButtun("faucetサイト",false,"#")}
+            {renderButtun("faucet Site",false,"#")}
           </Box>
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            {!currentAccount && renderButtun("ウォレット接続",true,"")}
+            {!currentAccount && renderButtun("Connect Wallet",true,"")}
             {currentAccount && !totalMintCount && !iaLoading &&
               <div>
                 {renderMintButtun()}
               </div>}
             {currentAccount && totalMintCount && !iaLoading &&
             <div>
-              {renderButtun("OpenSeaでNFTを確認",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
-              <p>NFTのミントに成功しました！おめでとうございます！</p>
+              {renderButtun("View your NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
+              <p>Congrats! Your NFT minted! </p>
             </div>}
             {currentAccount && !totalMintCount && iaLoading &&
             <div>
@@ -388,7 +393,7 @@ const Index = () => {
                 color='#f6a429'
                 size='xl'
               />
-              <p>しばらくお待ちください。</p>
+              <p>Please wait just a little bit more.</p>
             </div>
             }
           </Box>
