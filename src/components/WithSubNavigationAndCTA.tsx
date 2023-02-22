@@ -54,14 +54,15 @@ import {
               variant={'ghost'}
               aria-label={'Toggle Navigation'}
             />
-            </Flex>
+          </Flex>
+
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-            
+
             <Box>
               <Link
                 p={2}
                 href={'/'}
-                fontSize={'3xl'}
+                fontSize={{ base: '3xl', md: 'sm' }}
                 fontWeight={700}
                 color={'black'}
                 _hover={{
@@ -73,10 +74,11 @@ import {
             </Box>
   
             <Center>
-            <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-              <DesktopNav />
-            </Flex>
+              <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+                <DesktopNav />
+              </Flex>
             </Center>
+
           </Flex>
   
           <Stack
@@ -249,11 +251,11 @@ import {
   
   const NAV_ITEMS: Array<NavItem> = [
     {
-      label: 'docs',
+      label: 'Docs',
       href: '/vote_manual',
     },
     {
-      label: '投票結果',
+      label: 'Voting Results',
       href: '#',
     },
   ];

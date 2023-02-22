@@ -38,6 +38,14 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     padding-bottom: 10px;
+    padding-left: 5px;
+  }
+
+  .decoratedtext2{
+    font-size: 60px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    padding-left: 5px;
   }
 
   @keyframes gradientEffect {
@@ -129,4 +137,19 @@
   .footer-left {
     padding-left: 20px;
     padding-right: 20px;
+  }
+
+  @media screen and (max-width:610px) {
+    .top-title {
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .desktop-navi{
+      display: none;
+    }
+  }@media screen and (min-width:611px) {
+    .top-title {
+      font-size: 25px;
+      font-weight: 700;
+    }
   }
