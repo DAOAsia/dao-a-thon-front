@@ -28,7 +28,8 @@ import {
 } from '@chakra-ui/icons';
 
 import { Footer } from '../components/Footer'
-import WithSubnavigation from '../components/WithSubNavigationAndCTA'
+//import WithSubnavigation from '../components/WithSubNavigationAndCTA'
+//import WithSubnavigation from "../components/WithSubNavigationAndCTA"
 import { DesktopNav, MobileNav } from '../components/WithSubNavigationAndCTA'
 import { ImgNFT } from '../components/ImageOfNFT'
 import { Describe } from '../components/Description'
@@ -262,7 +263,8 @@ const Index = () => {
               {mask(currentAccount)}でミント
             </Button>;
   };
-  function FormPage() {
+  
+  /*function FormPage() {
     // 子コンポーネント側に引き渡す関数の定義
     function sendData(enteredData) {
       // 子コンポーネント側から関数が呼ばれると実行される処理
@@ -277,7 +279,7 @@ const Index = () => {
       setCurrentAccount(enteredData);
     }
     return <WithSubnavigation setCurrentAccount={setCurrentAccount} />;
-  }
+  }*/
 
   return(
     <div className="App">
