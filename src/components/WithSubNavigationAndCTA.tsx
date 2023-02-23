@@ -256,7 +256,7 @@ import {
     },
     {
       label: 'Voting Results',
-      href: 'https://faucet.polygon.technology/',
+      href: '#',
     },
   ];
   //ナビゲーションの項目から更に下の階層の分岐を表示させたいときは以下のように実装する
