@@ -223,7 +223,7 @@ const Index = () => {
     if( isOnClick ){
       return  <Button
               display={'inline-flex'}
-              width={'150px'}
+              width={'200px'}
               onClick={connectWallet}
               shadow={"md"}
               fontSize={'sm'}
@@ -242,7 +242,7 @@ const Index = () => {
               target={'_blank'} 
               rel={'noreferrer'}
               display={'inline-flex'}
-              width={'150px'}
+              width={'200px'}
               shadow={"md"}
               fontSize={'sm'}
               fontWeight={600}
@@ -258,7 +258,7 @@ const Index = () => {
   const renderMintButtun = () => {
     return  <Button
               display={{ base: 'none', md: 'inline-flex' }}
-              width={'150px'}
+              width={'200px'}
               onClick={mintNFT}
               shadow={"md"}
               fontSize={'sm'}
