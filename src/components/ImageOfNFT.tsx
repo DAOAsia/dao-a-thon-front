@@ -1,7 +1,7 @@
 
 export const ImgNFT = ({ imagesrc }: { imagesrc: string }) => (
     <div className="imgcenter">
-        <img id="image" src={imagesrc}></img>
+        <a href="https://testnets.opensea.io/ja/assets/mumbai/0xf2D242721111497806a0ea644E738F182BCE407B"><img id="image" src={imagesrc}></img></a>
     </div>
 )
 
