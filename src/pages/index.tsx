@@ -277,7 +277,7 @@ const Index = () => {
               _hover={{
                 bg: '#F9BC30',
               }}>
-              Mint on {mask(currentAccount)}
+              Mint on &nbsp; {mask(currentAccount)}
             </Button>;
   };
   
