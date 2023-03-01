@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment, FC } from "react";
 import { ethers } from 'ethers';
 import contract from '../contracts/Daoathon.json';
 import {
@@ -19,6 +19,15 @@ import {
   useBreakpointValue,
   useDisclosure,
   Spinner,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Heading,
+  HStack,
+  LinkProps,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -30,7 +39,7 @@ import {
 import { Footer } from '../components/Footer'
 //import WithSubnavigation from '../components/WithSubNavigationAndCTA'
 //import WithSubnavigation from "../components/WithSubNavigationAndCTA"
-import { DesktopNav, MobileNav } from '../components/WithSubNavigationAndCTA'
+import { DesktopNav, MobileNav, Navigation, DrawerMenu, LayoutWithMenu } from '../components/WithSubNavigationAndCTA'
 import { ImgNFT } from '../components/ImageOfNFT'
 import { Describe } from '../components/Description'
 import { TopMessage } from '../components/TopMessage'
@@ -312,20 +321,13 @@ const Index = () => {
               borderColor={useColorModeValue('gray.200', 'gray.900')}
               align={'center'}>
               
-              <Flex
-                flex={{ base: 1, md: 'auto' }}
-                ml={{ base: -2 }}
-                display={{ base: 'flex', md: 'none' }}>
-                <IconButton
-                  onClick={onToggle}
-                  icon={
-                    isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-                  }
-                  variant={'ghost'}
-                  aria-label={'Toggle Navigation'}
-                  margin-right={"20px"}
-                />
-              </Flex>
+              <Stack>
+                <HStack p={1}>
+                  <Box display={{ base: "block", md: "none", }}>
+                    <DrawerMenu />
+                  </Box>
+                </HStack>
+              </Stack>
 
               <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
                 
@@ -361,9 +363,7 @@ const Index = () => {
               </Box>}
             </Flex>
       
-            <Collapse in={isOpen} animateOpacity>
-              <MobileNav />
-            </Collapse>
+            
           </Box>
           {/************************************ここまでトップナビゲーションバー*************************************/}
         </div>

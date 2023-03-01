@@ -139,27 +139,80 @@
     padding-right: 20px;
   }
 
-  @media screen and (max-width:610px) {
+  /*@media screen and (max-width:440px) {
     .top-title {
       font-size: 10px;
-      font-weight: 700;
+      font-weight: 900;
     }
     .desktop-navi{
       display: none;
     }
-  }@media screen and (min-width:611px) {
+    .responsive-button {
+      width: 150px;
+    }
+  }@media screen and (max-width:768px) {
+    .top-title {
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .responsive-button {
+      width: 200px;
+    }
+  }@media screen and (max-width:1200px) {
     .top-title {
       font-size: 25px;
       font-weight: 700;
     }
-  }
-
-  @media screen and (max-width:440px) {
-    .responsive-button {
-      width: 150px;
-    }
-  }@media screen and (min-width:441px) {
     .responsive-button {
       width: 200px;
     }
+  }*/
+
+  @media screen and (max-width:480px) {
+    .top-title {
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .desktop-navi{
+      display: none;
+    }
+    .responsive-button {
+      width: 150px;
+    }
+  }
+
+  /* 480px〜599px：SP横
+  ------------------------------ */
+  @media screen and (min-width:481px) and (max-width:599px) { 
+    .top-title {
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .desktop-navi{
+      display: none;
+    }
+    .responsive-button {
+      width: 150px;
+    } 
+  }
+  
+  /* 600px〜959px：タブレット
+  ------------------------------ */
+  @media screen and (min-width:600px) and (max-width:959px) {
+  
+  
+  }
+  
+  /* 960px〜1279px：小型PC
+  ------------------------------ */
+  @media screen and (min-width:960px) and (max-width:1279px) {
+  
+  
+  }
+  
+  /* 1280px〜：大型PC
+  ------------------------------ */
+  @media screen and (min-width:1280px) {
+  
+  
   }
