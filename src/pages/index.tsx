@@ -223,7 +223,7 @@ const Index = () => {
     if( isOnClick ){
       return  <Button
               display={'inline-flex'}
-              width={'200px'}
+              className="responsive-button"
               onClick={connectWallet}
               shadow={"md"}
               fontSize={'sm'}
@@ -242,7 +242,7 @@ const Index = () => {
               target={'_blank'} 
               rel={'noreferrer'}
               display={'inline-flex'}
-              width={'200px'}
+              className="responsive-button"
               shadow={"md"}
               fontSize={'sm'}
               fontWeight={600}
@@ -323,6 +323,7 @@ const Index = () => {
                   }
                   variant={'ghost'}
                   aria-label={'Toggle Navigation'}
+                  margin-right={"20px"}
                 />
               </Flex>
 

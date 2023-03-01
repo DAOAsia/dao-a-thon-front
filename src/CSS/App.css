@@ -153,3 +153,13 @@
       font-weight: 700;
     }
   }
+
+  @media screen and (max-width:440px) {
+    .responsive-button {
+      width: 150px;
+    }
+  }@media screen and (min-width:441px) {
+    .responsive-button {
+      width: 200px;
+    }
+  }
