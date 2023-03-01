@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment, FC } from "react";
 import { ethers } from 'ethers';
 import contract from '../contracts/Daoathon.json';
 import {
@@ -19,6 +19,15 @@ import {
   useBreakpointValue,
   useDisclosure,
   Spinner,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Heading,
+  HStack,
+  LinkProps,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -30,7 +39,7 @@ import {
 import { Footer } from '../components/Footer'
 //import WithSubnavigation from '../components/WithSubNavigationAndCTA'
 //import WithSubnavigation from "../components/WithSubNavigationAndCTA"
-import { DesktopNav, MobileNav } from '../components/WithSubNavigationAndCTA'
+import { DesktopNav, MobileNav, Navigation, DrawerMenu, LayoutWithMenu } from '../components/WithSubNavigationAndCTA'
 import { ImgNFT } from '../components/ImageOfNFT'
 import { Describe } from '../components/Description'
 import { TopMessage } from '../components/TopMessage'
@@ -223,7 +232,7 @@ const Index = () => {
     if( isOnClick ){
       return  <Button
               display={'inline-flex'}
-              width={'200px'}
+              className="responsive-button"
               onClick={connectWallet}
               shadow={"md"}
               fontSize={'sm'}
@@ -242,7 +251,7 @@ const Index = () => {
               target={'_blank'} 
               rel={'noreferrer'}
               display={'inline-flex'}
-              width={'200px'}
+              className="responsive-button"
               shadow={"md"}
               fontSize={'sm'}
               fontWeight={600}
@@ -257,8 +266,8 @@ const Index = () => {
   };
   const renderMintButtun = () => {
     return  <Button
-              display={{ base: 'none', md: 'inline-flex' }}
-              width={'200px'}
+              display={'inline-flex'}
+              className="responsive-button"
               onClick={mintNFT}
               shadow={"md"}
               fontSize={'sm'}
@@ -268,7 +277,7 @@ const Index = () => {
               _hover={{
                 bg: '#F9BC30',
               }}>
-              Mint on {mask(currentAccount)}
+              Mint on &nbsp; {mask(currentAccount)}
             </Button>;
   };
   
@@ -312,19 +321,13 @@ const Index = () => {
               borderColor={useColorModeValue('gray.200', 'gray.900')}
               align={'center'}>
               
-              <Flex
-                flex={{ base: 1, md: 'auto' }}
-                ml={{ base: -2 }}
-                display={{ base: 'flex', md: 'none' }}>
-                <IconButton
-                  onClick={onToggle}
-                  icon={
-                    isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-                  }
-                  variant={'ghost'}
-                  aria-label={'Toggle Navigation'}
-                />
-              </Flex>
+              <Stack>
+                <HStack p={1}>
+                  <Box display={{ base: "block", md: "none", }}>
+                    <DrawerMenu />
+                  </Box>
+                </HStack>
+              </Stack>
 
               <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
                 
@@ -356,13 +359,11 @@ const Index = () => {
               </Box>}
               {currentAccount && 
               <Box display='flex' justifyContent='flex-end' color={"white"}>
-                <p>address:{currentAccount}</p>
+                <p className="responsive-address">address:{mask(currentAccount)}</p>
               </Box>}
             </Flex>
       
-            <Collapse in={isOpen} animateOpacity>
-              <MobileNav />
-            </Collapse>
+            
           </Box>
           {/************************************ここまでトップナビゲーションバー*************************************/}
         </div>
@@ -383,7 +384,7 @@ const Index = () => {
               </div>}
             {currentAccount && totalMintCount && !iaLoading &&
             <div>
-              {renderButtun("View your NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
+              {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
               <p>Congrats! Your NFT minted! </p>
             </div>}
             {currentAccount && !totalMintCount && iaLoading &&

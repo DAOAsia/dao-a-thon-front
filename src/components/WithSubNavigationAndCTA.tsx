@@ -1,4 +1,4 @@
-
+import React, { FC } from "react"
 import {
     Box,
     Flex,
@@ -16,6 +16,15 @@ import {
     useColorModeValue,
     useBreakpointValue,
     useDisclosure,
+    Drawer,
+    DrawerBody,
+    DrawerCloseButton,
+    DrawerContent,
+    DrawerHeader,
+    DrawerOverlay,
+    Heading,
+    HStack,
+    LinkProps,
   } from '@chakra-ui/react';
   import {
     HamburgerIcon,
@@ -25,6 +34,66 @@ import {
   } from '@chakra-ui/icons';
 
   import { renderButtunToConnectToWallet } from '../components/HandleButton';
+
+  const HoverLink = (props: LinkProps) => <Link rounded="base" _hover={{bg:"gray.200"}} p={2} {...props } />
+
+  export const Navigation = () => {
+    return (
+      <Stack as="nav">
+        <HoverLink>Docs</HoverLink>
+        <HoverLink>Voting Results</HoverLink>
+      </Stack>
+    )
+  }
+
+  export const DrawerMenu = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const btnRef = React.useRef<HTMLButtonElement>(null)
+  
+    return (
+      <>
+        <IconButton ref={btnRef} onClick={onOpen} variant={'ghost'} aria-label={'Toggle Navigation'}>
+          <HamburgerIcon />
+        </IconButton>
+        <Drawer
+          isOpen={isOpen}
+          onClose={onClose}
+          placement="left"
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay>
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>
+                Menu
+              </DrawerHeader>
+              <DrawerBody>
+                <Navigation />
+              </DrawerBody>
+            </DrawerContent>
+          </DrawerOverlay>
+        </Drawer>
+      </>
+    )
+  }
+
+  export const LayoutWithMenu = () => {
+    return (
+      <Stack>
+        <HStack p={5}>
+          <Box display={{ base: "block", md: "none", }}>
+            <DrawerMenu />
+          </Box>
+          <Heading>Humberger Shop</Heading>
+        </HStack>
+        <HStack alignItems="start" >
+          <Box display={{ base: "none", md: "block" }} w={500} px={6}>
+            <Navigation />
+          </Box>
+        </HStack>
+      </Stack>
+    )
+  }
   
   export default function WithSubnavigation(props) {
   //export const WithSubnavigation= () => {
