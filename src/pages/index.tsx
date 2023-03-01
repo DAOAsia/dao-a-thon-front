@@ -266,8 +266,8 @@ const Index = () => {
   };
   const renderMintButtun = () => {
     return  <Button
-              display={{ base: 'none', md: 'inline-flex' }}
-              width={'200px'}
+              display={'inline-flex'}
+              className="responsive-button"
               onClick={mintNFT}
               shadow={"md"}
               fontSize={'sm'}
@@ -359,7 +359,7 @@ const Index = () => {
               </Box>}
               {currentAccount && 
               <Box display='flex' justifyContent='flex-end' color={"white"}>
-                <p>address:{currentAccount}</p>
+                <p className="responsive-address">address:{mask(currentAccount)}</p>
               </Box>}
             </Flex>
       
@@ -384,7 +384,7 @@ const Index = () => {
               </div>}
             {currentAccount && totalMintCount && !iaLoading &&
             <div>
-              {renderButtun("View your NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
+              {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
               <p>Congrats! Your NFT minted! </p>
             </div>}
             {currentAccount && !totalMintCount && iaLoading &&
