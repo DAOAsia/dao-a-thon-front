@@ -1,5 +1,13 @@
 import React, { useEffect, useState, Fragment, FC } from "react";
 import { ethers } from 'ethers';
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useEnsAvatar,
+  useEnsName,
+} from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
 import contract from '../contracts/Daoathon.json';
 import {
   Box,
@@ -75,6 +83,11 @@ const Index = () => {
   const [totalMintCount, setTotalMintCount] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [iaLoading, setIsLoading] = useState(false);
+  const { address, connector, isConnected } = useAccount();
+  const { data: ensAvatar } = useEnsAvatar({ address });
+  const { data: ensName } = useEnsName({ address });
+  const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
+  const { disconnect } = useDisconnect();
 
   {/************************************ここから処理系のメソッド************************************/}  
 
@@ -280,6 +293,11 @@ const Index = () => {
               Mint on &nbsp; {mask(currentAccount)}
             </Button>;
   };
+
+  function Profile() {   
+    if (isConnected) return <div>Connected to {ensName ?? address}</div>
+    return <Button onClick={() => connect( { connector: new InjectedConnector(), } )}>Connect Wallet</Button>
+  }
   
   /*function FormPage() {
     // 子コンポーネント側に引き渡す関数の定義
@@ -402,6 +420,24 @@ const Index = () => {
           </Box>
         </div>
       </div>
+      {Profile()}
+      {/*<div>
+        {connectors.map((connector) => (
+          <Button
+            disabled={!connector.ready}
+            key={connector.id}
+            onClick={() => connect({ connector })}
+          >
+            {connector.name}
+            {!connector.ready && ' (unsupported)'}
+            {isLoading &&
+              connector.id === pendingConnector?.id &&
+              ' (connecting)'}
+          </Button>
+        ))}
+  
+        {error && <div>{error.message}</div>}
+      </div>*/}
       <Footer />
       {/*<CTA />*/}
     
