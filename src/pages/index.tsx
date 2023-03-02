@@ -7,7 +7,11 @@ import {
   useEnsAvatar,
   useEnsName,
 } from 'wagmi'
+import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import contract from '../contracts/Daoathon.json';
 import {
   Box,
@@ -64,6 +68,11 @@ const OPENSEA_LINK = 'https://testnets.opensea.io/0x4833c2fb6f00787c7f5f60a7f1a8
 const abi = contract.abi;
 const contractAddress = "0xf2D242721111497806a0ea644E738F182BCE407B";
 const MaticTestnetMumbaiNetworkChainId = "0x13881";
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [mainnet],
+  [alchemyProvider({ apiKey: 'SHTH-lk3Fpkv9Xr8tqUElh3K5gTUYZpg' }), publicProvider()],
+)
 
 {/***********************************************************************************************/}
 {/***********************************************************************************************/}
@@ -296,7 +305,7 @@ const Index = () => {
 
   function Profile() {   
     if (isConnected) return <div>Connected to {ensName ?? address}</div>
-    return <Button onClick={() => connect( { connector: new InjectedConnector(), } )}>Connect Wallet</Button>
+    return <Button onClick={() => connect( { connector: new MetaMaskConnector({ chains }), } )}>Connect Wallet</Button>
   }
   
   /*function FormPage() {
