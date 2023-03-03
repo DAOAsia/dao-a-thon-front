@@ -309,6 +309,35 @@ const Index = () => {
     if (isConnected) return <Button onClick={() => mintNFT()}>mint on mobile</Button>
     return <Button onClick={() => connect( { connector: new MetaMaskConnector({ chains }), } )}>Connect Wallet</Button>
   }
+
+  const renderDisplayButton = () => {
+    return(
+      <div>
+        {!currentAccount && renderButtun("Connect Wallet",true,"")}
+        {currentAccount && !totalMintCount && !iaLoading &&
+          <div>
+            {renderMintButtun()}
+          </div>}
+        {currentAccount && totalMintCount && !iaLoading &&
+        <div>
+          {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
+          <p>Congrats! Your NFT minted! </p>
+        </div>}
+        {currentAccount && !totalMintCount && iaLoading &&
+        <div>
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='#f6a429'
+            size='xl'
+          />
+          <p>Please wait just a little bit more.</p>
+        </div>
+        }
+      </div>
+    )
+  }
   
   /*function FormPage() {
     // 子コンポーネント側に引き渡す関数の定義
@@ -406,33 +435,7 @@ const Index = () => {
             {renderButtun("faucet Site",false,"https://faucet.polygon.technology/")}
           </Box>
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            <div className="pc_display">
-            {!currentAccount && renderButtun("Connect Wallet",true,"")}
-            {currentAccount && !totalMintCount && !iaLoading &&
-              <div>
-                {renderMintButtun()}
-              </div>}
-            {currentAccount && totalMintCount && !iaLoading &&
-            <div>
-              {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
-              <p>Congrats! Your NFT minted! </p>
-            </div>}
-            {currentAccount && !totalMintCount && iaLoading &&
-            <div>
-              <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='#f6a429'
-                size='xl'
-              />
-              <p>Please wait just a little bit more.</p>
-            </div>
-            }
-            </div>
-            <div className="sumaho_display">
-              {Profile()}
-            </div>
+            {renderDisplayButton()}
           </Box>
         </div>
       </div>
