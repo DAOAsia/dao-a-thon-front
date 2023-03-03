@@ -406,6 +406,7 @@ const Index = () => {
             {renderButtun("faucet Site",false,"https://faucet.polygon.technology/")}
           </Box>
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
+            <div className="pc_display">
             {!currentAccount && renderButtun("Connect Wallet",true,"")}
             {currentAccount && !totalMintCount && !iaLoading &&
               <div>
@@ -428,10 +429,13 @@ const Index = () => {
               <p>Please wait just a little bit more.</p>
             </div>
             }
+            </div>
+            <div className="sumaho_display">
+              {Profile()}
+            </div>
           </Box>
         </div>
       </div>
-      {Profile()}
       {/*<div>
         {connectors.map((connector) => (
           <Button
