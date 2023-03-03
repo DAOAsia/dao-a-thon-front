@@ -6,8 +6,10 @@ import {
   useDisconnect,
   useEnsAvatar,
   useEnsName,
+  useSwitchNetwork,
 } from 'wagmi'
 import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
+import { polygonMumbai } from '@wagmi/core/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -70,7 +72,7 @@ const contractAddress = "0xf2D242721111497806a0ea644E738F182BCE407B";
 const MaticTestnetMumbaiNetworkChainId = "0x13881";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet],
+  [polygonMumbai],
   [alchemyProvider({ apiKey: 'SHTH-lk3Fpkv9Xr8tqUElh3K5gTUYZpg' }), publicProvider()],
 )
 
@@ -304,7 +306,7 @@ const Index = () => {
   };
 
   function Profile() {   
-    if (isConnected) return <div>Connected to {ensName ?? address}</div>
+    if (isConnected) return <div>Connected to {ensName ?? address}{renderMintButtun()}</div>
     return <Button onClick={() => connect( { connector: new MetaMaskConnector({ chains }), } )}>Connect Wallet</Button>
   }
   
