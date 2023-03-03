@@ -4,9 +4,10 @@ import {
   useAccount,
   useConnect,
   useDisconnect,
-  useEnsAvatar,
-  useEnsName,
+  //useEnsAvatar,
+  //useEnsName,
   useSwitchNetwork,
+  useNetwork, 
 } from 'wagmi'
 import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
 import { polygonMumbai } from '@wagmi/core/chains'
@@ -71,10 +72,7 @@ const abi = contract.abi;
 const contractAddress = "0xf2D242721111497806a0ea644E738F182BCE407B";
 const MaticTestnetMumbaiNetworkChainId = "0x13881";
 
-const { chains, provider, webSocketProvider } = configureChains(
-  [polygonMumbai],
-  [alchemyProvider({ apiKey: 'SHTH-lk3Fpkv9Xr8tqUElh3K5gTUYZpg' }), publicProvider()],
-)
+
 
 {/***********************************************************************************************/}
 {/***********************************************************************************************/}
@@ -95,10 +93,17 @@ const Index = () => {
   const [showToast, setShowToast] = useState(false);
   const [iaLoading, setIsLoading] = useState(false);
   const { address, connector, isConnected } = useAccount();
-  const { data: ensAvatar } = useEnsAvatar({ address });
-  const { data: ensName } = useEnsName({ address });
+  //const { data: ensAvatar } = useEnsAvatar({ address });
+  //const { data: ensName } = useEnsName({ address });
   const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
   const { disconnect } = useDisconnect();
+  const { chain } = useNetwork();
+  const { pendingChainId, switchNetwork } = useSwitchNetwork();
+  const { chains, provider, webSocketProvider } = configureChains(
+    [polygonMumbai],
+    [alchemyProvider({ apiKey: 'SHTH-lk3Fpkv9Xr8tqUElh3K5gTUYZpg' }), publicProvider()],
+  );
+  
 
   {/************************************ここから処理系のメソッド************************************/}  
 
@@ -176,6 +181,7 @@ const Index = () => {
   };
 
   const mintNFT = async () => {
+    switchNetwork?.(chains[0].id);
     const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
     const network = await ethereum.request({ method: 'eth_chainId' });
 
@@ -301,7 +307,7 @@ const Index = () => {
               _hover={{
                 bg: '#F9BC30',
               }}>
-              Mint on &nbsp; {mask(currentAccount)}
+              Mint on &nbsp; {mask(address)}
             </Button>;
   };
 
@@ -313,8 +319,18 @@ const Index = () => {
   const renderDisplayButton = () => {
     return(
       <div>
-        {!currentAccount && renderButtun("Connect Wallet",true,"")}
-        {currentAccount && !totalMintCount && !iaLoading &&
+        {chain && <div>Connected to {chain.name}</div>}
+        <button
+          disabled={!switchNetwork || chains[0].id === chain?.id}
+          key={chains[0].id}
+          onClick={() => switchNetwork?.(chains[0].id)}
+          >
+          {chains[0].name}
+          {isLoading && pendingChainId === chains[0].id && ' (switching)'}
+        </button>
+        <div>{error && error.message}</div>
+        {!isConnected && renderButtun("Connect Wallet",true,"")}
+        {isConnected && !totalMintCount && !iaLoading &&
           <div>
             {renderMintButtun()}
           </div>}
