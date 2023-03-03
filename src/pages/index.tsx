@@ -306,7 +306,7 @@ const Index = () => {
   };
 
   function Profile() {   
-    if (isConnected) return <div>{renderMintButtun()}</div>
+    if (isConnected) return <Button onClick={() => mintNFT()}>mint on mobile</Button>
     return <Button onClick={() => connect( { connector: new MetaMaskConnector({ chains }), } )}>Connect Wallet</Button>
   }
   
