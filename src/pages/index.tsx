@@ -257,7 +257,7 @@ const Index = () => {
       return  <Button
               display={'inline-flex'}
               className="responsive-button"
-              onClick={connectWallet}
+              onClick={() => connect( { connector: new MetaMaskConnector({ chains }), } )}
               shadow={"md"}
               fontSize={'sm'}
               fontWeight={600}
