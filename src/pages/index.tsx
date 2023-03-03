@@ -6,6 +6,7 @@ import {
   useDisconnect,
   useEnsAvatar,
   useEnsName,
+  useSwitchNetwork,
 } from 'wagmi'
 import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
 import { polygonMumbai } from '@wagmi/core/chains'
@@ -305,7 +306,7 @@ const Index = () => {
   };
 
   function Profile() {   
-    if (isConnected) return <div>Connected to {ensName ?? address}</div>
+    if (isConnected) return <div>Connected to {ensName ?? address}{renderMintButtun()}</div>
     return <Button onClick={() => connect( { connector: new MetaMaskConnector({ chains }), } )}>Connect Wallet</Button>
   }
   
