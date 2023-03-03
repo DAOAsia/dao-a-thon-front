@@ -306,7 +306,7 @@ const Index = () => {
   };
 
   function Profile() {   
-    if (isConnected) return <div>Connected to {ensName ?? address}{renderMintButtun()}</div>
+    if (isConnected) return <div>{renderMintButtun()}</div>
     return <Button onClick={() => connect( { connector: new MetaMaskConnector({ chains }), } )}>Connect Wallet</Button>
   }
   
