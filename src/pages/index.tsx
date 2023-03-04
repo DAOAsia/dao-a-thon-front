@@ -8,6 +8,9 @@ import {
   //useEnsName,
   useSwitchNetwork,
   useNetwork, 
+  useContractRead, 
+  useContractWrite, 
+  usePrepareContractWrite, 
 } from 'wagmi'
 import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
 import { polygonMumbai } from '@wagmi/core/chains'
@@ -103,6 +106,17 @@ const Index = () => {
     [polygonMumbai],
     [alchemyProvider({ apiKey: 'SHTH-lk3Fpkv9Xr8tqUElh3K5gTUYZpg' }), publicProvider()],
   );
+  /*const { data, isError, } = useContractRead({
+    address: contractAddress,
+    abi: abi,
+    functionName: 'mintNft',
+  });*/
+  const { config } = usePrepareContractWrite({
+    address: contractAddress,
+    abi: abi,
+    functionName: 'mintNft',
+    })
+    const { data, isSuccess, write } = useContractWrite(config)
   
 
   {/************************************ここから処理系のメソッド************************************/}  
@@ -181,7 +195,7 @@ const Index = () => {
   };
 
   const mintNFT = async () => {
-    switchNetwork?.(chains[0].id);
+
     const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
     const network = await ethereum.request({ method: 'eth_chainId' });
 
@@ -226,6 +240,16 @@ const Index = () => {
         alert("Failed to mint...");
       }
     }
+  }
+
+  const mintN = async () => {
+    if(chains[0].id !== chain?.id){
+      await switchNetwork?.(chains[0].id);
+      console.log("Switch!");
+    }
+    console.log("Ok!");
+    write?.();
+    if(isSuccess) console.log(JSON.stringify(data));
   }
 
   {/************************************ここからuseEffect系のメソッド************************************/}
@@ -298,7 +322,7 @@ const Index = () => {
     return  <Button
               display={'inline-flex'}
               className="responsive-button"
-              onClick={mintNFT}
+              onClick={mintN}
               shadow={"md"}
               fontSize={'sm'}
               fontWeight={600}
@@ -319,7 +343,7 @@ const Index = () => {
   const renderDisplayButton = () => {
     return(
       <div>
-        {chain && <div>Connected to {chain.name}</div>}
+        {/*{chain && <div>Connected to {chain.name}</div>}
         <button
           disabled={!switchNetwork || chains[0].id === chain?.id}
           key={chains[0].id}
@@ -328,7 +352,7 @@ const Index = () => {
           {chains[0].name}
           {isLoading && pendingChainId === chains[0].id && ' (switching)'}
         </button>
-        <div>{error && error.message}</div>
+        <div>{error && error.message}</div>*/}
         {!isConnected && renderButtun("Connect Wallet",true,"")}
         {isConnected && !totalMintCount && !iaLoading &&
           <div>
