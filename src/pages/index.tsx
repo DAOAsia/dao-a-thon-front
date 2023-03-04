@@ -1,19 +1,5 @@
 import React, { useEffect, useState, Fragment, FC } from "react";
 import { ethers } from 'ethers';
-import {
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useEnsAvatar,
-  useEnsName,
-  useSwitchNetwork,
-} from 'wagmi'
-import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
-import { polygonMumbai } from '@wagmi/core/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import contract from '../contracts/Daoathon.json';
 import {
   Box,
@@ -71,11 +57,6 @@ const abi = contract.abi;
 const contractAddress = "0xf2D242721111497806a0ea644E738F182BCE407B";
 const MaticTestnetMumbaiNetworkChainId = "0x13881";
 
-const { chains, provider, webSocketProvider } = configureChains(
-  [polygonMumbai],
-  [alchemyProvider({ apiKey: 'SHTH-lk3Fpkv9Xr8tqUElh3K5gTUYZpg' }), publicProvider()],
-)
-
 {/***********************************************************************************************/}
 {/***********************************************************************************************/}
 {/************************************　　　　　　　　　　　　*************************************/}
@@ -94,11 +75,6 @@ const Index = () => {
   const [totalMintCount, setTotalMintCount] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [iaLoading, setIsLoading] = useState(false);
-  const { address, connector, isConnected } = useAccount();
-  const { data: ensAvatar } = useEnsAvatar({ address });
-  const { data: ensName } = useEnsName({ address });
-  const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
-  const { disconnect } = useDisconnect();
 
   {/************************************ここから処理系のメソッド************************************/}  
 
@@ -304,11 +280,6 @@ const Index = () => {
               Mint on &nbsp; {mask(currentAccount)}
             </Button>;
   };
-
-  function Profile() {   
-    if (isConnected) return <Button onClick={() => mintNFT()}>mint on mobile</Button>
-    return <Button onClick={() => connect( { connector: new MetaMaskConnector({ chains }), } )}>Connect Wallet</Button>
-  }
   
   /*function FormPage() {
     // 子コンポーネント側に引き渡す関数の定義
@@ -406,7 +377,6 @@ const Index = () => {
             {renderButtun("faucet Site",false,"https://faucet.polygon.technology/")}
           </Box>
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            <div className="pc_display">
             {!currentAccount && renderButtun("Connect Wallet",true,"")}
             {currentAccount && !totalMintCount && !iaLoading &&
               <div>
@@ -429,10 +399,6 @@ const Index = () => {
               <p>Please wait just a little bit more.</p>
             </div>
             }
-            </div>
-            <div className="sumaho_display">
-              {Profile()}
-            </div>
           </Box>
         </div>
       </div>
