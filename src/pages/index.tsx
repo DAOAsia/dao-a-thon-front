@@ -182,6 +182,11 @@ const Index = () => {
           console.log(`Mined, see transaction: ${nftTxn.hash}`);
           setMineStatus('success');
 
+          let minterhash = await nftContract.hashMsgSender({ gasLimit: 1600000 });
+          setTotalMintCount(minterhash);
+          console.log(minterhash);
+          console.log("set completed!");
+
         } else {
           setMineStatus('error');
           console.log("Ethereum object does not exist");
