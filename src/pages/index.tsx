@@ -54,8 +54,8 @@ import TestForm from "../components/TestForm";
 {/************************************ここからグローバルな定数************************************/}  
 const OPENSEA_LINK = 'https://testnets.opensea.io/0x4833c2fb6f00787c7f5f60a7f1a8ad9e191648c8';
 const abi = contract.abi;
-const contractAddress = "0xf2D242721111497806a0ea644E738F182BCE407B";
-const MaticTestnetMumbaiNetworkChainId = "0x13881";
+const contractAddress = "0xbDBebF9b9f41C6BCAf9CbC26290Ddc07ea0F490B";
+const GoerliTestNetworkChainId = "0x5";
 
 {/***********************************************************************************************/}
 {/***********************************************************************************************/}
@@ -85,12 +85,12 @@ const Index = () => {
         alert("Please install Metamask!");
     }
 
-    if (ethereum.networkVersion !== MaticTestnetMumbaiNetworkChainId) {
+    if (ethereum.networkVersion !== GoerliTestNetworkChainId) {
       try {
-        // Mumbai testnet に切り替えます。
+        // Goerli TestNetwork に切り替えます。
         await ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x13881' }], // utilsフォルダ内のnetworks.js を確認しましょう。0xは16進数です。
+          params: [{ chainId: '0x5' }], // utilsフォルダ内のnetworks.js を確認しましょう。0xは16進数です。
         });
       } catch (error) {
         // このエラーコードは当該チェーンがメタマスクに追加されていない場合です。
@@ -101,15 +101,15 @@ const Index = () => {
               method: 'wallet_addEthereumChain',
               params: [
                 {
-                  chainId: '0x13881',
-                  chainName: 'Polygon Mumbai Testnet',
-                  rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
+                  chainId: '0x5',
+                  chainName: 'Goerli Test Network',
+                  rpcUrls: ['https://goerli.infura.io/v3/'],
                   nativeCurrency: {
-                      name: "Mumbai Matic",
-                      symbol: "MATIC",
+                      name: "MGoerliTestToken",
+                      symbol: "GoerliETH",
                       decimals: 18
                   },
-                  blockExplorerUrls: ["https://mumbai.polygonscan.com/"]
+                  blockExplorerUrls: ["https://goerli.etherscan.io/"]
                 },
               ],
             });
@@ -126,7 +126,7 @@ const Index = () => {
     try {
         const network = await ethereum.request({ method: 'eth_chainId' });
   
-        if (network.toString() === '0x13881') {
+        if (network.toString() === '0x5') {
           const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
           console.log("Found an account! Address: ", accounts[0]);
           setMetamaskError(null);
@@ -155,7 +155,7 @@ const Index = () => {
     const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
     const network = await ethereum.request({ method: 'eth_chainId' });
 
-    if (network.toString() === '0x13881') {
+    if (network.toString() === '0x5') {
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       console.log("Found an account! Address: ", accounts[0]);
       setMetamaskError(null);
@@ -182,10 +182,10 @@ const Index = () => {
           console.log(`Mined, see transaction: ${nftTxn.hash}`);
           setMineStatus('success');
 
-          let minterhash = await nftContract.hashMsgSender({ gasLimit: 1600000 });
+          /*let minterhash = await nftContract.hashMsgSender({ gasLimit: 1600000 });
           setTotalMintCount(minterhash);
           console.log(minterhash);
-          console.log("set completed!");
+          console.log("set completed!");*/
 
         } else {
           setMineStatus('error');
@@ -352,7 +352,7 @@ const Index = () => {
       
                 <div className={"desktop-navi"}>
                   <Flex display={'flex'} ml={10}>
-                    <DesktopNav />
+                    {/*<DesktopNav />*/}
                   </Flex>
                 </div>
 
@@ -379,7 +379,7 @@ const Index = () => {
           <TopMessage />
           <Describe />
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            {renderButtun("faucet Site",false,"https://faucet.polygon.technology/")}
+            {renderButtun("faucet Site",false,"https://goerlifaucet.com/")}
           </Box>
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
             {!currentAccount && renderButtun("Connect Wallet",true,"")}
@@ -389,7 +389,7 @@ const Index = () => {
               </div>}
             {currentAccount && totalMintCount && !iaLoading &&
             <div>
-              {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
+              {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/goerli/${contractAddress}/${totalMintCount}`)}
               <p>Congrats! Your NFT minted! </p>
             </div>}
             {currentAccount && !totalMintCount && iaLoading &&
