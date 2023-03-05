@@ -54,7 +54,7 @@ import TestForm from "../components/TestForm";
 {/************************************ここからグローバルな定数************************************/}  
 const OPENSEA_LINK = 'https://testnets.opensea.io/0x4833c2fb6f00787c7f5f60a7f1a8ad9e191648c8';
 const abi = contract.abi;
-const contractAddress = "0xf2D242721111497806a0ea644E738F182BCE407B";
+const contractAddress = "0x89F54661f11c29B712f6578B9bA5A1Ffbb2c3Bd2";
 const GoerliTestNetworkChainId = "0x5";
 
 {/***********************************************************************************************/}
@@ -389,7 +389,7 @@ const Index = () => {
               </div>}
             {currentAccount && totalMintCount && !iaLoading &&
             <div>
-              {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
+              {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/goerli/${contractAddress}/${totalMintCount}`)}
               <p>Congrats! Your NFT minted! </p>
             </div>}
             {currentAccount && !totalMintCount && iaLoading &&
