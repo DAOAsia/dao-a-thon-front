@@ -54,7 +54,7 @@ import TestForm from "../components/TestForm";
 {/************************************ここからグローバルな定数************************************/}  
 const OPENSEA_LINK = 'https://testnets.opensea.io/0x4833c2fb6f00787c7f5f60a7f1a8ad9e191648c8';
 const abi = contract.abi;
-const contractAddress = "0x89F54661f11c29B712f6578B9bA5A1Ffbb2c3Bd2";
+const contractAddress = "0xbDBebF9b9f41C6BCAf9CbC26290Ddc07ea0F490B";
 const GoerliTestNetworkChainId = "0x5";
 
 {/***********************************************************************************************/}
