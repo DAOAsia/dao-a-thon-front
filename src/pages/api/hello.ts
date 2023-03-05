@@ -10,4 +10,17 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   res.status(200).json({ name: 'John Doe' })
+  //if(req === ""){}
+}
+
+
+export async function getServerSideProps(context){
+
+  // クエリパラメータの取得
+  const keyword = context.query.keyword;
+  const page = context.query.page;
+
+  console.log("keyword =", keyword);
+  console.log("page =", page);
+  return { props: {} };
 }
