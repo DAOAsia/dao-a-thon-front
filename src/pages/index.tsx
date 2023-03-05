@@ -352,7 +352,7 @@ const Index = () => {
       
                 <div className={"desktop-navi"}>
                   <Flex display={'flex'} ml={10}>
-                    <DesktopNav />
+                    {/*<DesktopNav />*/}
                   </Flex>
                 </div>
 
