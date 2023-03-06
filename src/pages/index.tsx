@@ -329,7 +329,7 @@ const Index = () => {
               <Stack>
                 <HStack p={1}>
                   <Box display={{ base: "block", md: "none", }}>
-                    <DrawerMenu />
+                    {/*<DrawerMenu />*/}
                   </Box>
                 </HStack>
               </Stack>
