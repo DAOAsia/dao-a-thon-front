@@ -4,52 +4,19 @@ import contract from '../contracts/Daoathon.json';
 import {
   Box,
   Flex,
-  Text,
-  IconButton,
   Button,
   Stack,
-  Collapse,
-  Icon,
   Link,
-  Center,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
   useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
   Spinner,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  Heading,
   HStack,
-  LinkProps,
 } from '@chakra-ui/react';
-import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons';
 
 import { Footer } from '../components/Footer'
-//import WithSubnavigation from '../components/WithSubNavigationAndCTA'
-//import WithSubnavigation from "../components/WithSubNavigationAndCTA"
-import { DesktopNav, MobileNav, Navigation, DrawerMenu, LayoutWithMenu } from '../components/WithSubNavigationAndCTA'
 import { ImgNFT } from '../components/ImageOfNFT'
 import { Describe } from '../components/Description'
 import { TopMessage } from '../components/TopMessage'
-import { BFaucet } from '../components/ButtonFaucet'
-import { BWallet } from '../components/ButtonWallet'
-import { Hero } from '../components/Hero'
-import { Container } from '../components/Container'
-import { Main } from '../components/Main'
-import { CTA } from '../components/CTA'
-import TestForm from "../components/TestForm";
 
 {/************************************ここからグローバルな定数************************************/}  
 const abi = contract.abi;
@@ -67,12 +34,10 @@ const MaticTestnetMumbaiNetworkChainId = "0x13881";
 const Index = () => {
 
   {/************************************ここからローカルな定数************************************/}
-  const { isOpen, onToggle } = useDisclosure();
   const [currentAccount, setCurrentAccount] = useState(null);
   const [metamaskError, setMetamaskError] = useState(null);
   const [mineStatus, setMineStatus] = useState(null);
   const [totalMintCount, setTotalMintCount] = useState("");
-  const [showToast, setShowToast] = useState(false);
   const [iaLoading, setIsLoading] = useState(false);
 
   {/************************************ここから処理系のメソッド************************************/}  
@@ -181,11 +146,6 @@ const Index = () => {
           console.log(`Mined, see transaction: ${nftTxn.hash}`);
           setMineStatus('success');
 
-          /*let minterhash = await nftContract.hashMsgSender({ gasLimit: 1600000 });
-          setTotalMintCount(minterhash);
-          console.log(minterhash);
-          console.log("set completed!");*/
-
         } else {
           setMineStatus('error');
           console.log("Ethereum object does not exist");
@@ -284,23 +244,6 @@ const Index = () => {
               Mint on &nbsp; {mask(currentAccount)}
             </Button>;
   };
-  
-  /*function FormPage() {
-    // 子コンポーネント側に引き渡す関数の定義
-    function sendData(enteredData) {
-      // 子コンポーネント側から関数が呼ばれると実行される処理
-      console.log(enteredData);
-    }
-    return <TestForm sendData={sendData} />;
-  }
-  function TestPage() {
-    // 子コンポーネント側に引き渡す関数の定義
-    function setCurrentAccount(enteredData) {
-      // 子コンポーネント側から関数が呼ばれると実行される処理
-      setCurrentAccount(enteredData);
-    }
-    return <WithSubnavigation setCurrentAccount={setCurrentAccount} />;
-  }*/
 
   {/*******************************************ここからメインのレイアウト******************************************/}
 
@@ -328,7 +271,6 @@ const Index = () => {
               <Stack>
                 <HStack p={1}>
                   <Box display={{ base: "block", md: "none", }}>
-                    {/*<DrawerMenu />*/}
                   </Box>
                 </HStack>
               </Stack>
@@ -351,12 +293,10 @@ const Index = () => {
       
                 <div className={"desktop-navi"}>
                   <Flex display={'flex'} ml={10}>
-                    {/*<DesktopNav />*/}
                   </Flex>
                 </div>
 
               </Flex>
-              {/*FormPage()*/}      
               {!currentAccount && 
               <Box display='flex' justifyContent='flex-end' >
                 {renderButtun("Connect Wallet",true,"")}
@@ -406,25 +346,7 @@ const Index = () => {
           </Box>
         </div>
       </div>
-      {/*<div>
-        {connectors.map((connector) => (
-          <Button
-            disabled={!connector.ready}
-            key={connector.id}
-            onClick={() => connect({ connector })}
-          >
-            {connector.name}
-            {!connector.ready && ' (unsupported)'}
-            {isLoading &&
-              connector.id === pendingConnector?.id &&
-              ' (connecting)'}
-          </Button>
-        ))}
-  
-        {error && <div>{error.message}</div>}
-      </div>*/}
       <Footer />
-      {/*<CTA />*/}
     
     </div>
   )
