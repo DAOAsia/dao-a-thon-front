@@ -318,7 +318,7 @@ const Index = () => {
           <TopMessage />
           <Describe />
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            {renderButtun("faucet Site",false,"https://goerlifaucet.com/")}
+            {renderButtun("faucet Site",false,"https://faucet.polygon.technology/")}
           </Box>
           <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
             {!currentAccount && renderButtun("Connect Wallet",true,"")}
