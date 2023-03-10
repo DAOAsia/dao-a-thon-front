@@ -1,61 +1,28 @@
-import React, { useEffect, useState, Fragment, FC } from "react";
+{/************************************ここからインポート************************************/} 
+import React, { useEffect, useState } from "react";
 import { ethers } from 'ethers';
 import contract from '../contracts/Daoathon.json';
 import {
   Box,
   Flex,
-  Text,
-  IconButton,
   Button,
   Stack,
-  Collapse,
-  Icon,
   Link,
-  Center,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
   useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
   Spinner,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  Heading,
   HStack,
-  LinkProps,
 } from '@chakra-ui/react';
-import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons';
 
 import { Footer } from '../components/Footer'
-//import WithSubnavigation from '../components/WithSubNavigationAndCTA'
-//import WithSubnavigation from "../components/WithSubNavigationAndCTA"
-import { DesktopNav, MobileNav, Navigation, DrawerMenu, LayoutWithMenu } from '../components/WithSubNavigationAndCTA'
 import { ImgNFT } from '../components/ImageOfNFT'
 import { Describe } from '../components/Description'
 import { TopMessage } from '../components/TopMessage'
-import { BFaucet } from '../components/ButtonFaucet'
-import { BWallet } from '../components/ButtonWallet'
-import { Hero } from '../components/Hero'
-import { Container } from '../components/Container'
-import { Main } from '../components/Main'
-import { CTA } from '../components/CTA'
-import TestForm from "../components/TestForm";
 
 {/************************************ここからグローバルな定数************************************/}  
-const OPENSEA_LINK = 'https://testnets.opensea.io/0x4833c2fb6f00787c7f5f60a7f1a8ad9e191648c8';
 const abi = contract.abi;
-const contractAddress = "0xbDBebF9b9f41C6BCAf9CbC26290Ddc07ea0F490B";
-const GoerliTestNetworkChainId = "0x5";
+const contractAddress = "0x1e0cdB7f43BCEB131A2fd7f0818a7ec55b25bd60";
+const MaticTestnetMumbaiNetworkChainId = "0x13881";
 
 {/***********************************************************************************************/}
 {/***********************************************************************************************/}
@@ -68,29 +35,27 @@ const GoerliTestNetworkChainId = "0x5";
 const Index = () => {
 
   {/************************************ここからローカルな定数************************************/}
-  const { isOpen, onToggle } = useDisclosure();
   const [currentAccount, setCurrentAccount] = useState(null);
   const [metamaskError, setMetamaskError] = useState(null);
   const [mineStatus, setMineStatus] = useState(null);
   const [totalMintCount, setTotalMintCount] = useState("");
-  const [showToast, setShowToast] = useState(false);
   const [iaLoading, setIsLoading] = useState(false);
 
   {/************************************ここから処理系のメソッド************************************/}  
 
   const connectWallet = async () => { 
-    const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
+    const { ethereum } = window as any;
     // ウォレット接続処理
     if (!ethereum) {
         alert("Please install Metamask!");
     }
 
-    if (ethereum.networkVersion !== GoerliTestNetworkChainId) {
+    if (ethereum.networkVersion !== MaticTestnetMumbaiNetworkChainId) {
       try {
-        // Goerli TestNetwork に切り替えます。
+        // Mumbai testnet に切り替えます。
         await ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x5' }], // utilsフォルダ内のnetworks.js を確認しましょう。0xは16進数です。
+          params: [{ chainId: '0x13881' }], // utilsフォルダ内のnetworks.js を確認しましょう。0xは16進数です。
         });
       } catch (error) {
         // このエラーコードは当該チェーンがメタマスクに追加されていない場合です。
@@ -101,15 +66,15 @@ const Index = () => {
               method: 'wallet_addEthereumChain',
               params: [
                 {
-                  chainId: '0x5',
-                  chainName: 'Goerli Test Network',
-                  rpcUrls: ['https://goerli.infura.io/v3/'],
+                  chainId: '0x13881',
+                  chainName: 'Polygon Mumbai Testnet',
+                  rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
                   nativeCurrency: {
-                      name: "MGoerliTestToken",
-                      symbol: "GoerliETH",
+                      name: "Mumbai Matic",
+                      symbol: "MATIC",
                       decimals: 18
                   },
-                  blockExplorerUrls: ["https://goerli.etherscan.io/"]
+                  blockExplorerUrls: ["https://mumbai.polygonscan.com/"]
                 },
               ],
             });
@@ -126,7 +91,7 @@ const Index = () => {
     try {
         const network = await ethereum.request({ method: 'eth_chainId' });
   
-        if (network.toString() === '0x5') {
+        if (network.toString() === '0x13881') {
           const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
           console.log("Found an account! Address: ", accounts[0]);
           setMetamaskError(null);
@@ -152,10 +117,10 @@ const Index = () => {
   };
 
   const mintNFT = async () => {
-    const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
+    const { ethereum } = window as any;
     const network = await ethereum.request({ method: 'eth_chainId' });
 
-    if (network.toString() === '0x5') {
+    if (network.toString() === '0x13881') {
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       console.log("Found an account! Address: ", accounts[0]);
       setMetamaskError(null);
@@ -181,11 +146,6 @@ const Index = () => {
 
           console.log(`Mined, see transaction: ${nftTxn.hash}`);
           setMineStatus('success');
-
-          /*let minterhash = await nftContract.hashMsgSender({ gasLimit: 1600000 });
-          setTotalMintCount(minterhash);
-          console.log(minterhash);
-          console.log("set completed!");*/
 
         } else {
           setMineStatus('error');
@@ -285,23 +245,99 @@ const Index = () => {
               Mint on &nbsp; {mask(currentAccount)}
             </Button>;
   };
-  
-  /*function FormPage() {
-    // 子コンポーネント側に引き渡す関数の定義
-    function sendData(enteredData) {
-      // 子コンポーネント側から関数が呼ばれると実行される処理
-      console.log(enteredData);
-    }
-    return <TestForm sendData={sendData} />;
-  }
-  function TestPage() {
-    // 子コンポーネント側に引き渡す関数の定義
-    function setCurrentAccount(enteredData) {
-      // 子コンポーネント側から関数が呼ばれると実行される処理
-      setCurrentAccount(enteredData);
-    }
-    return <WithSubnavigation setCurrentAccount={setCurrentAccount} />;
-  }*/
+
+  const renderTopNavi = () => (
+    <Box>
+      <Flex
+        bg={useColorModeValue('#f6a429', 'gray.800')}
+        color={useColorModeValue('gray.600', 'white')}
+        position={"fixed"}
+        top={"0"}
+        left={"0"}
+        width={"100%"}
+        minH={'60px'}
+        py={{ base: 2 }}
+        px={{ base: 4 }}
+        borderBottom={1}
+        borderStyle={'solid'}
+        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        align={'center'}>
+        
+        <Stack>
+          <HStack p={1}>
+            <Box display={{ base: "block", md: "none", }}>
+            </Box>
+          </HStack>
+        </Stack>
+
+        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+          
+          <Box>
+            <Link
+              className={"top-title"}
+              p={2}
+              href={'/'}
+              color={'white'}
+              _hover={{
+                textDecoration: 'none',
+                color: 'gray',
+              }}>
+                DAO-A-THON NFT
+            </Link>
+          </Box>
+
+          <div className={"desktop-navi"}>
+            <Flex display={'flex'} ml={10}>
+            </Flex>
+          </div>
+
+        </Flex>
+        {!currentAccount && 
+        <Box display='flex' justifyContent='flex-end' >
+          {renderButtun("Connect Wallet",true,"")}
+        </Box>}
+        {currentAccount && 
+        <Box display='flex' justifyContent='flex-end' color={"white"}>
+          <p className="responsive-address">address:{mask(currentAccount)}</p>
+        </Box>}
+      </Flex>
+    </Box>
+  );
+
+  const renderContents = () => (
+    <div>
+      <ImgNFT />
+      <TopMessage />
+      <Describe />
+      <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
+        {renderButtun("faucet Site",false,"https://faucet.polygon.technology/")}
+      </Box>
+      <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
+        {!currentAccount && renderButtun("Connect Wallet",true,"")}
+        {currentAccount && !totalMintCount && !iaLoading &&
+          <div>
+            {renderMintButtun()}
+          </div>}
+        {currentAccount && totalMintCount && !iaLoading &&
+        <div>
+          {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
+          <p>Congrats! Your NFT minted! </p>
+        </div>}
+        {currentAccount && !totalMintCount && iaLoading &&
+        <div>
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='#f6a429'
+            size='xl'
+          />
+          <p>Please wait just a little bit more.</p>
+        </div>
+        }
+      </Box>
+    </div>
+  );
 
   {/*******************************************ここからメインのレイアウト******************************************/}
 
@@ -310,122 +346,17 @@ const Index = () => {
       <header>
         <div className="container-head">
           {/************************************ここからトップナビゲーションバー************************************/}
-          <Box>
-            <Flex
-              bg={useColorModeValue('#f6a429', 'gray.800')}
-              color={useColorModeValue('gray.600', 'white')}
-              position={"fixed"}
-              top={"0"}
-              left={"0"}
-              width={"100%"}
-              minH={'60px'}
-              py={{ base: 2 }}
-              px={{ base: 4 }}
-              borderBottom={1}
-              borderStyle={'solid'}
-              borderColor={useColorModeValue('gray.200', 'gray.900')}
-              align={'center'}>
-              
-              <Stack>
-                <HStack p={1}>
-                  <Box display={{ base: "block", md: "none", }}>
-                    {/*<DrawerMenu />*/}
-                  </Box>
-                </HStack>
-              </Stack>
-
-              <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-                
-                <Box>
-                  <Link
-                    className={"top-title"}
-                    p={2}
-                    href={'/'}
-                    color={'white'}
-                    _hover={{
-                      textDecoration: 'none',
-                      color: 'gray',
-                    }}>
-                      DAO-A-THON NFT
-                  </Link>
-                </Box>
-      
-                <div className={"desktop-navi"}>
-                  <Flex display={'flex'} ml={10}>
-                    {/*<DesktopNav />*/}
-                  </Flex>
-                </div>
-
-              </Flex>
-              {/*FormPage()*/}      
-              {!currentAccount && 
-              <Box display='flex' justifyContent='flex-end' >
-                {renderButtun("Connect Wallet",true,"")}
-              </Box>}
-              {currentAccount && 
-              <Box display='flex' justifyContent='flex-end' color={"white"}>
-                <p className="responsive-address">address:{mask(currentAccount)}</p>
-              </Box>}
-            </Flex>
-      
-            
-          </Box>
-          {/************************************ここまでトップナビゲーションバー*************************************/}
+          {renderTopNavi()}
         </div>
       </header>
       <div className="top-wrapper">
         <div className="container ">
-          <ImgNFT />
-          <TopMessage />
-          <Describe />
-          <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            {renderButtun("faucet Site",false,"https://goerlifaucet.com/")}
-          </Box>
-          <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            {!currentAccount && renderButtun("Connect Wallet",true,"")}
-            {currentAccount && !totalMintCount && !iaLoading &&
-              <div>
-                {renderMintButtun()}
-              </div>}
-            {currentAccount && totalMintCount && !iaLoading &&
-            <div>
-              {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/goerli/${contractAddress}/${totalMintCount}`)}
-              <p>Congrats! Your NFT minted! </p>
-            </div>}
-            {currentAccount && !totalMintCount && iaLoading &&
-            <div>
-              <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='#f6a429'
-                size='xl'
-              />
-              <p>Please wait just a little bit more.</p>
-            </div>
-            }
-          </Box>
+          {/******************************************ここからコンテンツ*******************************************/}
+          {renderContents()}
         </div>
       </div>
-      {/*<div>
-        {connectors.map((connector) => (
-          <Button
-            disabled={!connector.ready}
-            key={connector.id}
-            onClick={() => connect({ connector })}
-          >
-            {connector.name}
-            {!connector.ready && ' (unsupported)'}
-            {isLoading &&
-              connector.id === pendingConnector?.id &&
-              ' (connecting)'}
-          </Button>
-        ))}
-  
-        {error && <div>{error.message}</div>}
-      </div>*/}
+      {/**********************************************ここからフッター**********************************************/}
       <Footer />
-      {/*<CTA />*/}
     
     </div>
   )
