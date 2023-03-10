@@ -320,7 +320,7 @@ const Index = () => {
           </div>}
         {currentAccount && totalMintCount && !iaLoading &&
         <div>
-          {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/goerli/${contractAddress}/${totalMintCount}`)}
+          {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/mumbai/${contractAddress}/${totalMintCount}`)}
           <p>Congrats! Your NFT minted! </p>
         </div>}
         {currentAccount && !totalMintCount && iaLoading &&
