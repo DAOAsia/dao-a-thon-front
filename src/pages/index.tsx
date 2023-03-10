@@ -1,4 +1,5 @@
-import React, { useEffect, useState, Fragment, FC } from "react";
+{/************************************ここからインポート************************************/} 
+import React, { useEffect, useState } from "react";
 import { ethers } from 'ethers';
 import contract from '../contracts/Daoathon.json';
 import {
@@ -43,7 +44,7 @@ const Index = () => {
   {/************************************ここから処理系のメソッド************************************/}  
 
   const connectWallet = async () => { 
-    const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
+    const { ethereum } = window as any;
     // ウォレット接続処理
     if (!ethereum) {
         alert("Please install Metamask!");
@@ -116,7 +117,7 @@ const Index = () => {
   };
 
   const mintNFT = async () => {
-    const { ethereum } = window as any;    // Buttonクリックで実行 -> クライアントサイドの処理なので、windowが参照できethereumが扱える
+    const { ethereum } = window as any;
     const network = await ethereum.request({ method: 'eth_chainId' });
 
     if (network.toString() === '0x13881') {
@@ -245,6 +246,99 @@ const Index = () => {
             </Button>;
   };
 
+  const renderTopNavi = () => (
+    <Box>
+      <Flex
+        bg={useColorModeValue('#f6a429', 'gray.800')}
+        color={useColorModeValue('gray.600', 'white')}
+        position={"fixed"}
+        top={"0"}
+        left={"0"}
+        width={"100%"}
+        minH={'60px'}
+        py={{ base: 2 }}
+        px={{ base: 4 }}
+        borderBottom={1}
+        borderStyle={'solid'}
+        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        align={'center'}>
+        
+        <Stack>
+          <HStack p={1}>
+            <Box display={{ base: "block", md: "none", }}>
+            </Box>
+          </HStack>
+        </Stack>
+
+        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+          
+          <Box>
+            <Link
+              className={"top-title"}
+              p={2}
+              href={'/'}
+              color={'white'}
+              _hover={{
+                textDecoration: 'none',
+                color: 'gray',
+              }}>
+                DAO-A-THON NFT
+            </Link>
+          </Box>
+
+          <div className={"desktop-navi"}>
+            <Flex display={'flex'} ml={10}>
+            </Flex>
+          </div>
+
+        </Flex>
+        {!currentAccount && 
+        <Box display='flex' justifyContent='flex-end' >
+          {renderButtun("Connect Wallet",true,"")}
+        </Box>}
+        {currentAccount && 
+        <Box display='flex' justifyContent='flex-end' color={"white"}>
+          <p className="responsive-address">address:{mask(currentAccount)}</p>
+        </Box>}
+      </Flex>
+    </Box>
+  );
+
+  const renderContents = () => (
+    <div>
+      <ImgNFT />
+      <TopMessage />
+      <Describe />
+      <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
+        {renderButtun("faucet Site",false,"https://faucet.polygon.technology/")}
+      </Box>
+      <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
+        {!currentAccount && renderButtun("Connect Wallet",true,"")}
+        {currentAccount && !totalMintCount && !iaLoading &&
+          <div>
+            {renderMintButtun()}
+          </div>}
+        {currentAccount && totalMintCount && !iaLoading &&
+        <div>
+          {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/goerli/${contractAddress}/${totalMintCount}`)}
+          <p>Congrats! Your NFT minted! </p>
+        </div>}
+        {currentAccount && !totalMintCount && iaLoading &&
+        <div>
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='#f6a429'
+            size='xl'
+          />
+          <p>Please wait just a little bit more.</p>
+        </div>
+        }
+      </Box>
+    </div>
+  );
+
   {/*******************************************ここからメインのレイアウト******************************************/}
 
   return(
@@ -252,100 +346,16 @@ const Index = () => {
       <header>
         <div className="container-head">
           {/************************************ここからトップナビゲーションバー************************************/}
-          <Box>
-            <Flex
-              bg={useColorModeValue('#f6a429', 'gray.800')}
-              color={useColorModeValue('gray.600', 'white')}
-              position={"fixed"}
-              top={"0"}
-              left={"0"}
-              width={"100%"}
-              minH={'60px'}
-              py={{ base: 2 }}
-              px={{ base: 4 }}
-              borderBottom={1}
-              borderStyle={'solid'}
-              borderColor={useColorModeValue('gray.200', 'gray.900')}
-              align={'center'}>
-              
-              <Stack>
-                <HStack p={1}>
-                  <Box display={{ base: "block", md: "none", }}>
-                  </Box>
-                </HStack>
-              </Stack>
-
-              <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-                
-                <Box>
-                  <Link
-                    className={"top-title"}
-                    p={2}
-                    href={'/'}
-                    color={'white'}
-                    _hover={{
-                      textDecoration: 'none',
-                      color: 'gray',
-                    }}>
-                      DAO-A-THON NFT
-                  </Link>
-                </Box>
-      
-                <div className={"desktop-navi"}>
-                  <Flex display={'flex'} ml={10}>
-                  </Flex>
-                </div>
-
-              </Flex>
-              {!currentAccount && 
-              <Box display='flex' justifyContent='flex-end' >
-                {renderButtun("Connect Wallet",true,"")}
-              </Box>}
-              {currentAccount && 
-              <Box display='flex' justifyContent='flex-end' color={"white"}>
-                <p className="responsive-address">address:{mask(currentAccount)}</p>
-              </Box>}
-            </Flex>
-      
-            
-          </Box>
-          {/************************************ここまでトップナビゲーションバー*************************************/}
+          {renderTopNavi()}
         </div>
       </header>
       <div className="top-wrapper">
         <div className="container ">
-          <ImgNFT />
-          <TopMessage />
-          <Describe />
-          <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            {renderButtun("faucet Site",false,"https://faucet.polygon.technology/")}
-          </Box>
-          <Box display='flex' justifyContent='center' alignItems='center' py={'3'}>
-            {!currentAccount && renderButtun("Connect Wallet",true,"")}
-            {currentAccount && !totalMintCount && !iaLoading &&
-              <div>
-                {renderMintButtun()}
-              </div>}
-            {currentAccount && totalMintCount && !iaLoading &&
-            <div>
-              {renderButtun("NFT at OpenSea",false,`https://testnets.opensea.io/ja/assets/goerli/${contractAddress}/${totalMintCount}`)}
-              <p>Congrats! Your NFT minted! </p>
-            </div>}
-            {currentAccount && !totalMintCount && iaLoading &&
-            <div>
-              <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='#f6a429'
-                size='xl'
-              />
-              <p>Please wait just a little bit more.</p>
-            </div>
-            }
-          </Box>
+          {/******************************************ここからコンテンツ*******************************************/}
+          {renderContents()}
         </div>
       </div>
+      {/**********************************************ここからフッター**********************************************/}
       <Footer />
     
     </div>
